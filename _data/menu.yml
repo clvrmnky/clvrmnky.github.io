@@ -1,7 +1,6 @@
 entries:
-  - title: all posts
-    post_list:
-      show_more: false
+  - title: writing
+    post_list: true
 
   - title: about
     url: about.html
