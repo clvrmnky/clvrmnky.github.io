@@ -1,18 +1,21 @@
 title: Opposable Thumbs
-description: >-
-  Notes on UI, interaction design, and building things people touch with their hands.
 author: clvrmnky
-baseurl: ""
 url: "https://clvrmnky.github.io"
+baseurl: ""
+description: >
+  Notes on UI, interaction design, and building things people touch with their hands.
 
-theme: minima
-minima:
-  skin: dark
+permalink: /:slug.html
 
-markdown: kramdown
+theme: no-style-please
+
+theme_config:
+  appearance: "auto"
+  back_home_text: ".."
+  date_format: "%Y-%m-%d"
+  show_description: true
+  lowercase_titles: false
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-
-header_pages:
-  - about.md
