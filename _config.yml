@@ -1,9 +1,10 @@
-title: Opposable Thumbs
-author: clvrmnky
+title: "[clvrmnky]"
+author: Justin Ranton
 url: "https://clvrmnky.github.io"
 baseurl: ""
 description: >
-  Notes on UI, interaction design, and building things people touch with their hands.
+  Notes on UX, interaction design, AI-assisted prototyping, and code-first
+  design systems.
 
 permalink: /:slug.html
 
