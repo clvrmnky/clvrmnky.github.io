@@ -5,5 +5,5 @@ entries:
   - title: about
     url: about.html
 
-  - title: rss
-    url: feed.xml
+  - title: >-
+      <span class="link-row"><a href="feed.xml">rss</a> | <a href="https://github.com/clvrmnky">github</a> | <a href="https://www.linkedin.com/in/jwranton">linkedin</a></span>
