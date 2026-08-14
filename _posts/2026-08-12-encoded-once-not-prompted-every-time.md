@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The harness gets smaller"
+title: "Encoded once, not prompted every time"
 date: 2026-08-12 07:00:00 -0700
 categories: design-engineering
 ---
@@ -12,17 +12,18 @@ figure.diagram svg text{font-family:"Atkinson Hyperlegible Next",sans-serif;}
 figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;font-style:italic;color:#606060;line-height:1.5;}
 </style>
 
-*The advice everywhere is to write more down. Most of it should never have been documentation, and once you sort it properly what is left is one thin row that matters a lot more than the pile it came out of.*
+*The advice everywhere is to write more design context down. I think most of it should never have been documentation, and the small part that survives should be authored once and retrieved at the moment of the decision, not pasted into a prompt every time. This is the thing I built to make that concrete.*
 
 **Executive summary**
 
 - Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else.
 - Most of what we write down passes. Spacing, contrast, tokens, theme, semantics. All of it should be compiled into something you cannot type wrong, and stop being prose.
 - What is left is pattern choice. Accordion or list, card or row, modal or panel. That is the only part that needs real judgment, and it is far thinner than the conversation about AI and design context suggests.
-- That thin part needs three things. Precedence, so a tie between two rules has an answer. Retrieval at the moment of the decision instead of a load at the start of a session. And a hard stop when nothing matches, because a generator that keeps going falls back on the model’s own priors, quietly and at full confidence. That is where drift comes from.
+- So I gave that part a format. A **judgment record**: a pattern, the condition it applies under, the principle and citation justifying it, and the alternatives it beat. Five of them, a JSON Schema, a research corpus underneath, and a matcher that resolves a condition against the library the same way every time. The repo is called **cairn**.
+- The claim that matters is not context against no context. Nobody argues context helps. It is **encoded once against pasted in every time** — whether a record living in the system beats the same rationale retyped into a prompt.
+- Three things make the format work rather than just exist. Precedence, so a tie between two records has an answer. Retrieval at the moment of the decision instead of a load at the start of a session. And a hard stop when nothing matches, because a generator that keeps going falls back on the model’s own priors, quietly and at full confidence. That is where drift comes from.
 - The gate is where this argument usually goes vague. Models generate and models score. A plain function decides. Nothing that generates gets a vote on its own output.
-- All of it has to live somewhere an agent can reach: numbered folders, each declaring a contract before it is allowed to hold anything. Those folder types turn out to be memory registers under a different name.
-- I have built the instrument. I have not shown it works. The narrowness claim carries the weight, and it can be tested without running a model at all.
+- All of it lives somewhere an agent can reach: numbered folders, each declaring a contract before it is allowed to hold anything. Those folder types turn out to be memory registers under a different name.
 
 
 ## Everyone says write more down
@@ -119,14 +120,59 @@ The edge already has a name, older than anything I came up with. Memory research
 So what a machine can check gets compiled and stops being documentation. What it cannot gets stored where you can retrieve it. Two different destinations. Almost everyone puts both in the same folder.
 
 
-## What is actually left
+## So I built the thing that holds what is left
 
-Run a design system through that question and most of it walks out. Touch target minimums, contrast ratios, spacing scales, type ramps, tokens, theme behaviour, semantic markup. All hard values. All checkable. All currently sitting in prose a model may or may not follow today.
+Run a design system through that question and most of it walks out. What stays is pattern choice — given this content, this audience, this much room, this viewport: accordion or flat list, card or list row, modal or inline panel. No token decides that and no linter can.
 
-What is left is pattern choice. Given this content, this audience, this much room, this viewport: accordion or flat list? Card or list row? Modal or inline panel? No token decides that. No linter can. It is the one row that actually needs judgment, and it is much thinner than the conversation suggests.
+Saying that is easy. The part I could not hand-wave was what the surviving row is actually *made of*, so I gave it a format and built it. The repo is called **cairn**, and the unit it is built around is a single judgment: a condition comes in, a pattern goes out, with a stated reason.
+
+That unit is a **judgment record**. Eight required fields, and the interesting thing is which ones:
+
+```json
+{
+  "id": "pattern.disclosure.accordion-vs-flat-list.001",
+  "pattern": "accordion",
+  "constraint_level": "pattern",
+  "enforcement": "soft",
+  "condition": {
+    "content_type": "optional-detail",
+    "audience": "mixed",
+    "density_budget": "space-constrained",
+    "viewport": "mobile"
+  },
+  "justification": {
+    "principle": "Progressive Disclosure",
+    "citation": "Nielsen Norman Group — Progressive Disclosure; Miller's Law",
+    "rationale": "Content is optional detail, not required for task completion,
+      and viewport space is constrained. Showing it flat would exceed a reasonable
+      working-memory chunk size and increase scroll-depth cost without benefit for
+      users who don't need the detail."
+  },
+  "alternatives_considered": [
+    { "pattern": "flat-list",
+      "rejected_because": "Exceeds comfortable chunk size at this content volume." },
+    { "pattern": "tabs",
+      "rejected_because": "Tabs imply mutually exclusive parallel sections a user
+        chooses between — this content is supplementary to a primary flow." }
+  ],
+  "origin": { "type": "universal", "authored_by": "…", "authored_date": "2026-07-24" }
+}
+```
+
+Three of those fields are doing real work, and they are the ones that would be easiest to leave out.
+
+**`constraint_level` and `enforcement` encode the sorting question directly.** The four levels are primitive, component, pattern, and block-surface, and enforcement is hard, soft, or partial. A pattern-level record should almost always be soft. A primitive-level one should almost always be hard. That is not decoration — it means the taxonomy is a schema field a machine can check rather than an argument in a blog post. One of the five records exists purely as the contrast case: a 44×44pt touch target, `constraint_level: primitive`, `enforcement: hard`, `linter_checkable: true`. It is in the library to mark the boundary. It is the shape of the thing that should *not* be a retrieved record at all.
+
+**`alternatives_considered` is mandatory, minimum one.** This is the field I would defend hardest, because it is what makes a record falsifiable instead of an assertion. Anyone can write down that they chose an accordion. Writing down that tabs were rejected because tabs imply mutually exclusive parallel sections is a claim someone can come back and argue with. A record with no rejected alternatives is a preference wearing a citation.
+
+**`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. This matters more than it looks: it is the field that decides what could ever become a shared asset across teams and what is permanently yours.
+
+Then there is the matcher, and it is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match — most declared fields — wins. No embeddings, no semantic similarity, no model in the loop. You can run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
+
+And the behaviour I care about most is what happens when nothing matches: it says so and stops. No match is a real result. It means nobody has ruled on this condition yet.
 
 <figure class="diagram" role="img" aria-label="The harness once enforcement absorbs the primitive and component rows: judgment shrinks to a single row and one pattern gate remains.">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 790" data-w="1520" data-h="790" role="img" aria-label="The harness if the hypotheses hold: judgment shrinks to a single row and enforcement absorbs the rest."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="286" class="hd" fill="#010101">The design harness</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 790" data-w="1520" data-h="790" role="img" aria-label="The harness this proposes: judgment shrinks to a single row and enforcement absorbs the rest."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="286" class="hd" fill="#010101">The design harness</text>
 <rect x="46" y="304" width="1298" height="452" rx="16" fill="none" stroke="#BEBEBE" stroke-width="1.5" stroke-dasharray="7 6"/>
 <text x="360" y="508" class="lbl" fill="#2C38F5">Expressible set</text>
 <rect x="360" y="520" width="600" height="190" rx="12" fill="#4D6FF2" fill-opacity="0.06" stroke="#4D6FF2" stroke-width="1.5"/>
@@ -177,13 +223,13 @@ Three things change once you accept that. Guardrails stop being something output
 Yes, this one nests too. Nesting is right when the containment is real, and a bounded set of options genuinely does contain everything the generator can produce. It is wrong when it is not, which is why documentation should never be drawn as containing a codebase.
 
 
-## What that thin row needs
+## What that thin row needs, and where mine is still thin
 
-Thin does not mean free. Three things have to be true or it falls over.
+Thin does not mean free. Three things have to be true or the format is just a nicer way to store opinions. Two of them the build does. One it does not, and that is the honest gap.
 
-**It needs precedence, not a list.** Two rules will contradict each other eventually and one has to win. I use three tiers. Constraints are hard rules and the agent flags a violation. Decisions carry the choice, the reasoning, and when to revisit. Context informs without constraining. I keep constraints rare on purpose, because if everything is a constraint then nothing is.
+**It needs precedence, not a list.** Two records will contradict each other eventually and one has to win. In the capture layer I have run longest this is three tiers: constraints are hard rules and the agent flags a violation, decisions carry the choice and the reasoning and when to revisit, context informs without constraining. I keep constraints rare on purpose, because if everything is a constraint then nothing is. **In cairn this is not solved.** Two records matching the same condition with conflicting recommendations has no defined resolution beyond most-specific-wins, and most-specific-wins is a tiebreak, not a precedence model. It is the first thing I would fix.
 
-**It needs to be retrieved when the decision happens, not loaded at the start.** A record gets matched against the actual condition at the moment it matters, most specific match wins, ties go to the owner. That is a different thing from stuffing a context window at the top of a session and hoping. It also fails differently. The failure is no-match instead of forgetting, and no-match you can see.
+**It needs to be retrieved when the decision happens, not loaded at the start.** A record gets matched against the actual condition at the moment it matters. That is a different thing from stuffing a context window at the top of a session and hoping. It also fails differently: the failure is no-match instead of forgetting, and no-match you can see. Worth being blunt about the current mechanism — matching is exact-field, nothing semantic. A condition phrased slightly differently misses. That is a real limit, and I would rather it miss loudly than fuzzy-match its way to a confident wrong record.
 
 **And it has to stop when nothing matches.** This is the line I would defend hardest. A generator that keeps going without a record does not produce nothing. It falls back on everything the model already believes about interfaces, quietly, at full confidence. That looks like success. It is where drift comes from, and you cannot see it, because the output is perfectly plausible.
 
@@ -398,6 +444,10 @@ An architecture that only exists in a diagram is a diagram. All of it has to sit
 
 What I use is a numbered folder workspace, and the numbering is not filing. Each stage is a folder, the order is the dependency order, and reading order is build order. Stage two cannot reason about accordion against card unless stage one has already made both named things, so stage one goes first and says so.
 
+In cairn that is five stages. `01_design-system` is the bounded vocabulary, deliberately minimal and deliberately grayscale. `02_judgment-layer` is the working core: schema, records, research corpus. `03_implementation` is where a judgment becomes a running artifact, currently a reference demo. `04_handoff` is keeping that artifact coherent as it changes, and it is research only. `05_environment` is the product surface a team would log into, and it is a deliberate stub — a `CONTEXT.md` that exists to explain why building it now would be a mistake, since without real handoff mechanics underneath it is just a nicer code generator.
+
+That last one is the part of the contract rule I did not expect to like. A stage is allowed to be empty. It is not allowed to be silent about being empty.
+
 The rule that carries the weight is that **every folder declares a contract before it is allowed to hold anything**. A CONTEXT.md, same seven fields every time. Which form this folder is. What it needs and where from. The steps. What it produces and who takes it. What a person has to check. A routing table of what is inside. And an honest note about what is not built yet. No orphan folders. The contract comes before the content.
 
 <figure class="diagram" role="img" aria-label="The workspace view: numbered stage folders, a CONTEXT.md contract in each, and four folder forms that map onto memory registers.">
@@ -480,35 +530,21 @@ There is one more layer and it is the one I have run longest. Capture happens li
 The bit I have not built is the join. Capture that writes straight into a numbered stage, tagged by type, instead of into one flat folder somebody sorts by hand later. That is the difference between something that works for one person and something a team can run.
 
 
-## What I do not know yet
+## What a harness like this should buy you
 
-All of that is an architecture, and an architecture is a hypothesis in a nice jacket. The thing I built to test it is called Precedent. A schema for judgment records, a small library of them, the research behind both, and a matcher that resolves a condition against the library the same way every time. It shows the format can be built. It does not show that using it improves anything, and mixing those two up is the most likely way this whole argument overclaims.
+The build shows the format is constructible and that a condition resolves against it the same way every time. That is not the same as showing it improves anything, and I would rather propose the outcomes plainly than dress them up as results.
 
-So here are the four claims, best supported first, each with what would kill it.
+So here is what a harness shaped this way is *for* — four outcomes, in descending order of how confident I am.
 
-**H1 · Narrowness.** The genuinely soft layer is pattern selection specifically. Most of what practitioners call spatial constraints are hard primitive values that should be encoded once and enforced mechanically. *Falsified if a classification pass over someone else’s corpus finds the enforceable fraction is small, or that pattern and component level constraints are not cleanly separable in practice.*
+**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value — touch target minima, spacing minima, contrast ratios — that should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, and the residue should land at pattern level specifically. That is the outcome the whole argument rests on, and the cheapest one to check, because checking it does not require running a model at all. Orbit is outside corroboration: they closed spacing, colour, semantics and theme, and stopped exactly where pattern choice begins.
 
-**H2 · Efficacy.** A retrieved record changes what the model generates, not just what it says about what it generated. *Falsified if an ablation shows no divergence in pattern choice, or more interestingly if the record moves only the stated rationale while the rendered pattern stays at the statistical mode.*
+**Output that moves, not just rationale that moves.** A retrieved record should change what the model generates, not merely what it says about what it generated. That distinction is the whole game. A record that improves the stated reasoning while the rendered pattern stays parked at the statistical mode would be a post-hoc explanation generator — precisely the failure this argument accuses after-the-fact compliance checking of.
 
-**H3 · Separability.** The judgment layer is authorable independently of any one design system and ports as a plug-in. *Falsified if porting the records requires rewriting the justifications rather than only remapping pattern names.*
+**A judgment layer that is not yours.** The records describe conditions and principles, not one vocabulary, so pointing the library at a different design system should be a matter of remapping pattern names rather than rewriting justifications. If that holds, the judgment layer stops being a team asset and starts being a field asset — something a profession could hold in common the way it holds Fitts's Law in common.
 
-**H4 · Accumulation.** Records compound, so the library appreciates rather than becoming a pile of one-offs. *Falsified if match rate against novel conditions stays flat as the library grows. At that point the honest name for it is a lookup table.*
+**A library that appreciates.** A record authored for one condition should earn value on later conditions nobody anticipated when writing it, so coverage grows faster than authoring effort. That is the difference between an asset and a lookup table, and it is the outcome furthest out — five records cannot compound, and no amount of architecture makes them.
 
-The comparison that actually matters is not context against no context. Nobody argues context helps. It is **written down once against pasted in every time**. Somebody who pastes the same rationale into a prompt might get the same output as a system that retrieves it automatically. If that holds, the deliverable is a good snippet, not a system, and most of this architecture is unnecessary.
-
-**Where each one actually stands today**
-
-- **H1** Argued, not measured. Corroborated from the outside by Orbit, which closed everything below pattern selection and stopped there.
-
-- **H2** Absent. This is the largest hole, and it should be named as one rather than deferred to future work.
-
-- **H3** Asserted and never attempted. One design system in the repo, and the same author wrote both halves.
-
-- **H4** Untestable at current size. Five records cannot demonstrate compounding.
-
-Cheapest path to an answer, in cost order. Sort somebody else’s design system constraints into the four levels and report what fraction is enforceable, no model needed. Then a three arm test that includes the pasted-in arm. Then port the records onto a design system I did not write and count how many justifications survive.
-
-The first one carries the weight, and it is the only one that still stands if somebody else already built the retrieval part.
+The comparison that actually matters underneath all four is not context against no context. Nobody argues context helps. It is **encoded once against pasted in every time**. Somebody who pastes the same rationale into a prompt might get the same output as a system that retrieves it automatically. That is the null this has to beat, and beating it is what separates a system from a very good snippet.
 
 
 ## The short version
@@ -517,7 +553,9 @@ Documentation used to describe a system from outside it. Skills, memory files, s
 
 Which is why the answer is not to write more. It is to sort it. Most of what you would write down should compile into something that cannot be typed wrong, and stop being prose. What is left is thin, needs actual judgment, needs to be there at the moment of the decision instead of loaded in advance, and needs a gate no model gets a vote in.
 
-The harness gets smaller. The part that stays gets a lot more serious.
+That surviving row deserves a format rather than a folder of documents, which is what cairn is an attempt at. A pattern, the condition it applies under, the principle behind it, the alternatives it beat, and an honest note about where it came from. Authored once by a person, retrieved automatically at the moment it is needed, and loud about the conditions nobody has ruled on yet.
+
+The harness gets smaller. The part that stays gets written down properly, once.
 
 
 ---
