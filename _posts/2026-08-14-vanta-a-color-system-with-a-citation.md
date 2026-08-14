@@ -103,11 +103,11 @@ The diagrams in [the last post]({{ site.baseurl }}/the-harness-outlives-the-mode
 
 This is the answer.
 
-The question I started with was narrow. Can you build a working design colour system out of scientific data?
+The question I started with was narrow. Can you build a working design color system out of scientific data?
 
-Not colour *inspired by* science. Every studio has a deck with a nebula in it. I mean the actual constraint. Pick a physical source, derive the values from measurements of that source, refuse to choose by eye.
+Not color *inspired by* science. Every studio has a deck with a nebula in it. I mean the actual constraint. Pick a physical source, derive the values from measurements of that source, refuse to choose by eye.
 
-Seven colours. None of them chosen.
+Seven colors. None of them chosen.
 
 <div class="vanta-viz"><div class="vanta-inner">
 <p class="v-label">The palette, positioned by wavelength</p>
@@ -116,23 +116,23 @@ Seven colours. None of them chosen.
 <p class="v-cap">Each tick is a real emission line. The position is the wavelength, not a design decision.</p>
 </div></div>
 
-## Colour was information before it was decoration
+## Color was information before it was decoration
 
 The thing that makes this work is not new. It is about four hundred years old.
 
-**It starts in 1666.** Isaac Newton, twenty-three, Cambridge shut down by plague, sitting alone at Woolsthorpe Manor with a prism. For nearly two thousand years the accepted theory, inherited from Aristotle and refined by Descartes, held that colour was something glass or water *added* to light.
+**It starts in 1666.** Isaac Newton, twenty-three, Cambridge shut down by plague, sitting alone at Woolsthorpe Manor with a prism. For nearly two thousand years the accepted theory, inherited from Aristotle and refined by Descartes, held that color was something glass or water *added* to light.
 
-Newton proved the opposite. White light already contains every colour. The prism only separates what was there the whole time.
+Newton proved the opposite. White light already contains every color. The prism only separates what was there the whole time.
 
-First real proof that colour is physics.
+First real proof that color is physics.
 
 **It becomes a science of identification in 1814.** Joseph von Fraunhofer mapped the sun's spectrum with more precision than anyone before him, and found the continuous rainbow Newton described was not continuous at all. It was interrupted by hundreds of thin dark lines, each at an exact, repeatable wavelength.
 
-He catalogued the brightest with letters. C, D, F, G′, h. He never fully explained why they were there.
+He cataloged the brightest with letters. C, D, F, G′, h. He never fully explained why they were there.
 
 That explanation came about forty-five years later, from Kirchhoff and Bunsen. Each line is a fingerprint of a specific element, absorbing or emitting at wavelengths unique to its own atomic structure.
 
-Spectroscopy was born in the gap between Fraunhofer's catalogue and its explanation. Reading *what something is made of* from the exact colour it emits.
+Spectroscopy was born in the gap between Fraunhofer's catalog and its explanation. Reading *what something is made of* from the exact color it emits.
 
 That is the idea the whole palette is built on.
 
@@ -144,17 +144,17 @@ Every hue in Vanta does not start as a design decision. It starts as a measured 
 <p class="v-label">Mid-ramp OKLCH, as implemented in panda.config.ts</p>
 <div class="v-plates">
   <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.22 29.54);"></div><div class="v-plate-body"><div class="v-plate-name">Cadmium</div><div class="v-plate-src">Michelson measured the Paris meter bar against this line in 1892. The first serious attempt to define length by light instead of metal. It won him the 1907 Nobel Prize.</div><div class="v-plate-data v-mono"><span>643.85nm</span><span>H 29.54</span></div></div></div>
-  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.12 73.27);"></div><div class="v-plate-body"><div class="v-plate-name">Krypton</div><div class="v-plate-src">Krypton-86's transition was the legally defined SI metre from 1960 to 1983. A wavelength standing in for a bar of metal.</div><div class="v-plate-data v-mono"><span>605.78nm</span><span>H 73.27</span></div></div></div>
+  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.12 73.27);"></div><div class="v-plate-body"><div class="v-plate-name">Krypton</div><div class="v-plate-src">Krypton-86's transition was the legally defined SI meter from 1960 to 1983. A wavelength standing in for a bar of metal.</div><div class="v-plate-data v-mono"><span>605.78nm</span><span>H 73.27</span></div></div></div>
   <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.12 101.78);"></div><div class="v-plate-body"><div class="v-plate-name">Helium</div><div class="v-plate-src">Janssen saw this unexplained line in the sun's chromosphere during the 1868 eclipse. The only element ever discovered in space before it was found on Earth.</div><div class="v-plate-data v-mono"><span>587.49nm</span><span>H 101.78</span></div></div></div>
   <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.14 126.5);"></div><div class="v-plate-body"><div class="v-plate-name">Oxygen</div><div class="v-plate-src">The aurora's forbidden transition green. Ångström saw it in 1868. It took until the 1920s and two Canadian physicists to explain why it was there.</div><div class="v-plate-data v-mono"><span>557.70nm</span><span>H 126.5</span></div></div></div>
-  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.09 203.44);"></div><div class="v-plate-body"><div class="v-plate-name">Hbeta</div><div class="v-plate-src">Hydrogen's Balmer series, n=4 to 2. An electron falling two energy levels. Fraunhofer's own line F, catalogued in 1814.</div><div class="v-plate-data v-mono"><span>486.10nm</span><span>H 203.44</span></div></div></div>
+  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.09 203.44);"></div><div class="v-plate-body"><div class="v-plate-name">Hbeta</div><div class="v-plate-src">Hydrogen's Balmer series, n=4 to 2. An electron falling two energy levels. Fraunhofer's own line F, cataloged in 1814.</div><div class="v-plate-data v-mono"><span>486.10nm</span><span>H 203.44</span></div></div></div>
   <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.20 268.58);"></div><div class="v-plate-body"><div class="v-plate-name">Hgamma</div><div class="v-plate-src">Balmer n=5 to 2, Fraunhofer's line G′. Closest of the Balmer lines to the eye's peak photopic sensitivity, which is why it carries the brand.</div><div class="v-plate-data v-mono"><span>434.10nm</span><span>H 268.58</span></div></div></div>
   <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0.27 314.78);"></div><div class="v-plate-body"><div class="v-plate-name">Calcium</div><div class="v-plate-src">The calcium H line. One of the pair Edwin Hubble tracked the redshift of across forty spiral nebulae in 1929, discovering the universe is expanding.</div><div class="v-plate-data v-mono"><span>396.80nm</span><span>H 314.78</span></div></div></div>
-  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0 0);"></div><div class="v-plate-body"><div class="v-plate-name">Achromatic</div><div class="v-plate-src">Zero chroma. The reference grey every ramp's contrast is checked against. No wavelength attached.</div><div class="v-plate-data v-mono"><span>n/a</span><span>C 0</span></div></div></div>
+  <div class="v-plate"><div class="v-swatch" style="background: oklch(0.59 0 0);"></div><div class="v-plate-body"><div class="v-plate-name">Achromatic</div><div class="v-plate-src">Zero chroma. The reference gray every ramp's contrast is checked against. No wavelength attached.</div><div class="v-plate-data v-mono"><span>n/a</span><span>C 0</span></div></div></div>
 </div>
 </div></div>
 
-The names are the derivation. Look up what emits at that wavelength and you have both the colour and its history in one word.
+The names are the derivation. Look up what emits at that wavelength and you have both the color and its history in one word.
 
 That solves a problem I did not set out to solve. "Blue 600" tells you nothing. "Hgamma" tells you it is hydrogen, Balmer series, and you can go check.
 
@@ -164,7 +164,7 @@ Four of the eight trace to hydrogen alone. Five real physical sources total, not
 
 Here is the part I did not engineer.
 
-Only *after* the Balmer colours were already adopted did cross-checking against Fraunhofer's 1814 letter catalogue show that several of them are literally his own lines. C. F. G′.
+Only *after* the Balmer colors were already adopted did cross-checking against Fraunhofer's 1814 letter catalog show that several of them are literally his own lines. C. F. G′.
 
 The palette had reconstructed a piece of nineteenth-century spectroscopy without intending to.
 
@@ -179,7 +179,7 @@ Wavelength to hue is a pipeline, not a lookup.
 <div class="vanta-viz"><div class="vanta-inner">
 <p class="v-label">Derivation</p>
 <span class="v-formula v-mono">wavelength (nm) → sRGB (Bruton's method) → OKLCH, extract H only</span>
-<p class="v-cap">Only the hue carries over. The raw conversion produces maximum-saturation spectral colour, far too neon for interface use. Lightness and chroma get built separately.</p>
+<p class="v-cap">Only the hue carries over. The raw conversion produces maximum-saturation spectral color, far too neon for interface use. Lightness and chroma get built separately.</p>
 </div></div>
 
 OKLCH is the source of truth throughout, not hex. Browsers consume L, C and H directly. There is no reason for hex to be the primary record.
@@ -198,7 +198,7 @@ So they get built, per a stated formula each.
 
 Lightness runs 0.26 to 0.93. Narrowed from an initial 0.15 to 0.97 because black and white are separate primitives and must never be aliased to a ramp's extremes. Step spacing is a symmetric warp rather than linear, concentrating resolution in the vivid middle instead of wasting it near the ends where a hue physically cannot read as itself.
 
-Chroma sits at 92% of whatever is achievable in gamut at each lightness. Pushed up from 78%, grounded in the Helmholtz-Kohlrausch effect. Saturated colours read as more luminous than lightness alone predicts. Real vision science, still used in aviation signal-light standards.
+Chroma sits at 92% of whatever is achievable in gamut at each lightness. Pushed up from 78%, grounded in the Helmholtz-Kohlrausch effect. Saturated colors read as more luminous than lightness alone predicts. Real vision science, still used in aviation signal-light standards.
 
 <div class="vanta-viz"><div class="vanta-inner">
 <div class="v-charts">
@@ -219,7 +219,7 @@ Chroma sits at 92% of whatever is achievable in gamut at each lightness. Pushed 
     <p class="v-cap">Same lightness, same 92% rule. Chroma still ranges widely, because violet has far more gamut headroom at this lightness than orange does.</p>
   </div>
 </div>
-<p class="v-label" style="margin-top:2rem;">The full 11-step ramp, per colour</p>
+<p class="v-label" style="margin-top:2rem;">The full 11-step ramp, per color</p>
 <div id="v-ramps" class="v-ramps"></div>
 <p class="v-cap">Computed live from the two formulas, not transcribed. Step 6, outlined, is the mid-ramp value in the table above.</p>
 </div></div>
@@ -236,7 +236,7 @@ And none of it came from the physics.
 
 The physics contributed hue angle. That is all it contributed.
 
-Which is the real finding, and it is not the romantic one. Provenance is good at the question taste is worst at: why this blue and not that one. It is useless at the question that actually determines whether a system works, which is how much light each colour throws.
+Which is the real finding, and it is not the romantic one. Provenance is good at the question taste is worst at: why this blue and not that one. It is useless at the question that actually determines whether a system works, which is how much light each color throws.
 
 You need both. The data settles the argument nobody can settle by eye. Perception settles everything else.
 
@@ -257,7 +257,7 @@ The conversion is the fussy part, and worth being precise about.
 
 Reflectance is a linear-light quantity. OKLCH lightness is perceptually compressed. You cannot treat a percentage as an L value directly.
 
-For an achromatic colour, OKLab's L reduces to the sum of its three L-row coefficients times the cube root of reflectance. That coefficient sum computes to roughly 0.99999999 for the published matrix. Close enough to exactly 1 that L is, in practice, just the cube root.
+For an achromatic color, OKLab's L reduces to the sum of its three L-row coefficients times the cube root of reflectance. That coefficient sum computes to roughly 0.99999999 for the published matrix. Close enough to exactly 1 that L is, in practice, just the cube root.
 
 Vantablack at 0.035% reflectance lands at L 0.0705. Purdue white at 98.1% lands at L 0.9936.
 
@@ -271,7 +271,7 @@ Two other methods were tried first. Both are documented rather than deleted, bec
 
 **Golden angle rotation. Rejected.** A φ-derived seed rotated by 360°/φ² provably never clusters, no matter how many hues you generate. The same mechanism behind sunflower seed spirals. Real maths with a genuine guarantee.
 
-Checked against actual colour targets it landed three of four culturally recognised hues at best. Never four of four. It reliably missed true amber.
+Checked against actual color targets it landed three of four culturally recognised hues at best. Never four of four. It reliably missed true amber.
 
 Not a failure of the maths. A mismatch between well-distributed and recognisable.
 
@@ -293,13 +293,13 @@ So it is rejected, not left open. The check was run.
 
 ## What I actually got
 
-Can you build a design colour system on scientific data?
+Can you build a design color system on scientific data?
 
 Yes. Roughly half of one.
 
 The data gave me seven hue angles I can defend without appealing to taste, a naming scheme that carries its own derivation, and a reasoning trail a future contributor can reconstruct rather than trust.
 
-It did not give me lightness. Or chroma. Or step spacing, gamut behaviour, or contrast.
+It did not give me lightness. Or chroma. Or step spacing, gamut behavior, or contrast.
 
 Those came from ordinary perceptual work, and they are the parts carrying the load.
 
@@ -313,7 +313,7 @@ The formulas are why it works.
 
 <div class="vanta-viz"><div class="vanta-inner">
 <p class="v-label">Sources</p>
-<p class="v-cap"><a href="https://en.wikipedia.org/wiki/Balmer_series">Balmer series</a> · <a href="https://en.wikipedia.org/wiki/Fraunhofer_lines">Fraunhofer lines</a> · <a href="https://www.nist.gov/document/museum-timelinepdf">Krypton-86 metre standard, NIST</a> · <a href="https://academic.oup.com/astrogeo/article/50/5/5.25/194606">Aurora green line history</a> · <a href="https://www.smithsonianmag.com/history/how-scientists-discovered-helium-first-alien-element-1868-180970057/">Discovery of helium</a> · <a href="https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-cosmological-redshift/">Hubble cosmological redshift</a> · <a href="https://en.wikipedia.org/wiki/Vantablack">Vantablack</a> · <a href="https://www.purdue.edu/newsroom/archive/releases/2021/Q2/the-whitest-paint-is-here-and-its-the-coolest.-literally..html">Purdue ultra-white paint</a> · <a href="https://en.wikipedia.org/wiki/Helmholtz%E2%80%93Kohlrausch_effect">Helmholtz-Kohlrausch effect</a> · <a href="https://en.wikipedia.org/wiki/Cherenkov_radiation">Cherenkov radiation</a></p>
+<p class="v-cap"><a href="https://en.wikipedia.org/wiki/Balmer_series">Balmer series</a> · <a href="https://en.wikipedia.org/wiki/Fraunhofer_lines">Fraunhofer lines</a> · <a href="https://www.nist.gov/document/museum-timelinepdf">Krypton-86 meter standard, NIST</a> · <a href="https://academic.oup.com/astrogeo/article/50/5/5.25/194606">Aurora green line history</a> · <a href="https://www.smithsonianmag.com/history/how-scientists-discovered-helium-first-alien-element-1868-180970057/">Discovery of helium</a> · <a href="https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-cosmological-redshift/">Hubble cosmological redshift</a> · <a href="https://en.wikipedia.org/wiki/Vantablack">Vantablack</a> · <a href="https://www.purdue.edu/newsroom/archive/releases/2021/Q2/the-whitest-paint-is-here-and-its-the-coolest.-literally..html">Purdue ultra-white paint</a> · <a href="https://en.wikipedia.org/wiki/Helmholtz%E2%80%93Kohlrausch_effect">Helmholtz-Kohlrausch effect</a> · <a href="https://en.wikipedia.org/wiki/Cherenkov_radiation">Cherenkov radiation</a></p>
 </div></div>
 
 <script>

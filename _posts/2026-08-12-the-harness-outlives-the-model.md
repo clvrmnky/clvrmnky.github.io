@@ -154,9 +154,9 @@ Ask this about every rule you've written down. **Can a machine check it?**
 
 Sounds like a detail. It's the whole fork.
 
-There's good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs can't close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One grey instead of the grey next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it's not something the model has to remember. CI is the contract. Docs are advice.
+There's good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs can't close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One gray instead of the gray next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it's not something the model has to remember. CI is the contract. Docs are advice.
 
-Here's the part that matters. They closed spacing, colour, semantics, and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail.
+Here's the part that matters. They closed spacing, color, semantics, and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail.
 
 They locked down what a thing looks like and never touched which thing to use.
 
@@ -218,7 +218,7 @@ Three of those fields do the real work. They're also the three that would be eas
 
 **`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. That field decides what could ever become a shared asset across teams and what stays permanently yours.
 
-Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal greyscale wireframe.
+Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
 
 The behavior I care about most is what happens when nothing matches. It says so and stops.
 
@@ -523,7 +523,7 @@ cairn/
 └── 05_environment/        # the product surface. deliberate stub
 ```
 
-Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately greyscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
+Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately grayscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
 
 That last one costs nothing and buys a lot. The unbuilt part of the system has an address and a stated reason. It isn't a ticket someone finds in eight months. It isn't silently absent either.
 
@@ -625,7 +625,7 @@ None of that is a proposal. It's how the setup works, and you can build it this 
 
 So here's what a harness shaped this way is *for*. Four outcomes, in descending order of how confident I am.
 
-**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value. Touch target minima. Spacing minima. Contrast ratios. All of it should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, with the residue landing at pattern level specifically. That's the outcome the whole argument rests on, and the cheapest one to check, because checking it doesn't require running a model at all. Orbit corroborates it from the outside. they closed spacing, colour, semantics, and theme, and stopped exactly where pattern choice begins.
+**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value. Touch target minima. Spacing minima. Contrast ratios. All of it should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, with the residue landing at pattern level specifically. That's the outcome the whole argument rests on, and the cheapest one to check, because checking it doesn't require running a model at all. Orbit corroborates it from the outside. they closed spacing, color, semantics, and theme, and stopped exactly where pattern choice begins.
 
 **Output that moves, not just rationale that moves.** A retrieved record should change what the model generates, not what it says about what it generated. That distinction is the whole game. A record that improves the stated reasoning while the rendered pattern stays parked at the statistical mode is a post-hoc explanation generator. Which is precisely the failure this argument accuses after-the-fact compliance checking of.
 
@@ -657,4 +657,4 @@ The harness gets smaller. It also gets to stay. Whatever model you're running in
 
 ---
 
-*Diagrams are set in Vanta: Atkinson Hyperlegible, and seven colour ramps whose hues are each a real, measured atomic emission line. Cadmium, krypton, helium, oxygen, hydrogen H-beta and H-gamma, calcium. Black and white are sourced the same way, from Vantablack and Purdue white rather than `#000` and `#fff`. These diagrams draw on four of the seven. [How the palette was derived.]({{ site.baseurl }}/vanta-a-colour-system-with-a-citation.html)*
+*Diagrams are set in Vanta: Atkinson Hyperlegible, and seven color ramps whose hues are each a real, measured atomic emission line. Cadmium, krypton, helium, oxygen, hydrogen H-beta and H-gamma, calcium. Black and white are sourced the same way, from Vantablack and Purdue white rather than `#000` and `#fff`. These diagrams draw on four of the seven. [How the palette was derived.]({{ site.baseurl }}/vanta-a-color-system-with-a-citation.html)*
