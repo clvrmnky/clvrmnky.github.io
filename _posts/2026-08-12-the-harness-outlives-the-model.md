@@ -10,6 +10,11 @@ figure.diagram{width:100vw;max-width:100vw;margin:2.6rem 0 2.6rem calc(50% - 50v
 figure.diagram svg{display:block;width:100%;max-width:1500px;margin:0 auto;height:auto;}
 figure.diagram svg text{font-family:"Atkinson Hyperlegible Next",sans-serif;}
 figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;font-style:italic;color:#606060;line-height:1.5;}
+.sources{width:100vw;max-width:100vw;margin:2.6rem 0 0 calc(50% - 50vw);padding:1.6rem 1rem 1.8rem;background:#FCFCFC;border-top:1px solid #BEBEBE;border-bottom:1px solid #BEBEBE;box-sizing:border-box;}
+.sources-inner{max-width:1100px;margin:0 auto;}
+.sources-label{font-variant:small-caps;letter-spacing:.08em;color:#606060;font-size:.78rem;margin:0 0 .9rem;}
+.sources-list{font-size:.8rem;color:#606060;line-height:1.7;margin:0;max-width:80ch;}
+.sources-list a{color:#242424;}
 </style>
 
 *Everyone's tuning prompts for a model that gets deprecated inside a year. The harness around it doesn't get deprecated. It's files on disk. A model plugs in, does the work, plugs out, and the practice stays where it was. This is how mine is built, and what two years of rebuilding it taught me.*
@@ -149,9 +154,9 @@ Ask this about every rule you've written down. **Can a machine check it?**
 
 Sounds like a detail. It's the whole fork.
 
-There's good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs can't close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One gray instead of the gray next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it's not something the model has to remember. CI is the contract. Docs are advice.
+There's good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs can't close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One grey instead of the grey next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it's not something the model has to remember. CI is the contract. Docs are advice.
 
-Here's the part that matters. They closed spacing, color, semantics, and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail.
+Here's the part that matters. They closed spacing, colour, semantics, and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail.
 
 They locked down what a thing looks like and never touched which thing to use.
 
@@ -213,7 +218,7 @@ Three of those fields do the real work. They're also the three that would be eas
 
 **`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. That field decides what could ever become a shared asset across teams and what stays permanently yours.
 
-Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
+Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal greyscale wireframe.
 
 The behavior I care about most is what happens when nothing matches. It says so and stops.
 
@@ -518,7 +523,7 @@ cairn/
 └── 05_environment/        # the product surface. deliberate stub
 ```
 
-Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately grayscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
+Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately greyscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
 
 That last one costs nothing and buys a lot. The unbuilt part of the system has an address and a stated reason. It isn't a ticket someone finds in eight months. It isn't silently absent either.
 
@@ -620,7 +625,7 @@ None of that is a proposal. It's how the setup works, and you can build it this 
 
 So here's what a harness shaped this way is *for*. Four outcomes, in descending order of how confident I am.
 
-**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value. Touch target minima. Spacing minima. Contrast ratios. All of it should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, with the residue landing at pattern level specifically. That's the outcome the whole argument rests on, and the cheapest one to check, because checking it doesn't require running a model at all. Orbit corroborates it from the outside. They closed spacing, color, semantics, and theme, and stopped exactly where pattern choice begins.
+**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value. Touch target minima. Spacing minima. Contrast ratios. All of it should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, with the residue landing at pattern level specifically. That's the outcome the whole argument rests on, and the cheapest one to check, because checking it doesn't require running a model at all. Orbit corroborates it from the outside. they closed spacing, colour, semantics, and theme, and stopped exactly where pattern choice begins.
 
 **Output that moves, not just rationale that moves.** A retrieved record should change what the model generates, not what it says about what it generated. That distinction is the whole game. A record that improves the stated reasoning while the rendered pattern stays parked at the statistical mode is a post-hoc explanation generator. Which is precisely the failure this argument accuses after-the-fact compliance checking of.
 
@@ -645,7 +650,11 @@ Almost everything else here is downstream of that one rule. You can apply it bef
 
 The harness gets smaller. It also gets to stay. Whatever model you're running in eighteen months reads the same files, and none of the work you put into it needs doing again.
 
+<div class="sources"><div class="sources-inner">
+<p class="sources-label">Sources</p>
+<p class="sources-list">Jake Van Clief and David McDermott, <em>Interpretable Context Methodology: Folder Structure as Agent Architecture</em> (2026) · <a href="https://github.com/RinDig/icm-architect">ICM-Architect</a>, an independent open-source implementation of the same five forms · <a href="https://polar.sh/blog/orbit-llm-safe-design-system">Building an LLM-Safe Design System</a>, Polar engineering, on Orbit · <a href="https://lawsofux.com/">Laws of UX</a>, Jon Yablonski, for Miller's Law and Fitts's Law · <a href="https://www.nngroup.com/articles/tabs-used-right/">Tabs, Used Right</a>, Nielsen Norman Group · Shumailov, Shumaylov, Zhao, Papernot, Anderson and Gal, "AI models collapse when trained on recursively generated data," <em>Nature</em> 631, 755–759 (2024), read alongside <a href="https://arxiv.org/abs/2410.12954">A Note on Shumailov et al. (2024)</a> · <a href="https://arxiv.org/html/2411.03477v2">CrowdGenUI</a> and <a href="https://arxiv.org/pdf/2601.17614">AlignUI</a>, preference-driven UI generation · <a href="https://arxiv.org/pdf/2511.00843">Portal UX Agent</a>, bounding selection without reasoning about it · <a href="https://github.com/UGAIForge/DesignRepair">DesignRepair</a> · <a href="https://github.com/nexu-io/open-design">Open Design</a> · <a href="https://salt-nlp.github.io/Design2Code/">Design2Code</a>, Stanford SALT · <a href="https://research.google/pubs/api-governance-at-scale/">API Governance at Scale</a>, Google Research, for the governance structure the tiering borrows from</p>
+</div></div>
 
 ---
 
-*Diagrams are set in the Vanta design system: Atkinson Hyperlegible, and a color ramp whose hues are derived from real emission wavelengths. Cadmium, Calcium H, hydrogen H-beta and H-gamma, on Vantablack and Purdue white.*
+*Diagrams are set in Vanta: Atkinson Hyperlegible, and seven colour ramps whose hues are each a real, measured atomic emission line. Cadmium, krypton, helium, oxygen, hydrogen H-beta and H-gamma, calcium. Black and white are sourced the same way, from Vantablack and Purdue white rather than `#000` and `#fff`. These diagrams draw on four of the seven. [How the palette was derived.]({{ site.baseurl }}/vanta-a-colour-system-with-a-citation.html)*
