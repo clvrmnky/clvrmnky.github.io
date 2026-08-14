@@ -99,7 +99,7 @@ categories: design-engineering
 .v-refl-fill { height: 100%; background: var(--v-accent); }
 </style>
 
-The diagrams in [the last post]({{ site.baseurl }}/the-harness-outlives-the-model.html) carry a footnote about something called Vanta. A few people asked what that actually is.
+The diagrams in [the last post]({{ site.baseurl }}/anatomy-of-a-design-system-harness.html) carry a footnote about something called Vanta. A few people asked what that actually is.
 
 This is the answer.
 
