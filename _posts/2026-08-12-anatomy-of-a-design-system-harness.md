@@ -22,7 +22,7 @@ figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;
 **Executive summary**
 
 - **A harness is not a design system, and it's not the model.** It's the connective structure: sources of truth, a guidance layer, execution, gates, and a path back. The design system is one input to it.
-- The substrate is **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agent architecture. Five forms, a contract in every folder, reading order as build order.
+- The substrate is **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agentic architecture. A small set of folder forms, a contract in every folder, reading order as build order.
 - Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else. It sorts into two destinations, not one folder.
 - Most of what we write down passes. Spacing. Contrast. Tokens, theme, semantics. All of it should compile into something you can't type wrong, and stop being prose.
 - What survives is pattern choice. Accordion or list. Card or row. Modal or panel. That's the only part needing real judgment, and it's far thinner than it first appears.
@@ -119,11 +119,9 @@ That version works. I'd still defend it. It's also too big, and that's what the 
 
 The harness needs a shape before any of the design-specific parts go in it. I want to be precise about where that shape came from, because it's the part of this with real validation behind it instead of my own conviction.
 
-It's called **ICM, Interpretable Context Methodology**. Jake Van Clief and David McDermott, *Folder Structure as Agent Architecture*. The core claim is exactly what the subtitle says. The folder hierarchy isn't where the context gets filed. It *is* the architecture.
+It's called **ICM, Interpretable Context Methodology**. Jake Van Clief and David McDermott, [*Folder Structure as Agentic Architecture*](https://arxiv.org/abs/2603.16021), March 2026. The core claim is exactly what the subtitle says. The folder hierarchy isn't where the context gets filed. It *is* the architecture. Their method replaces framework-level orchestration with filesystem structure, and numbered folders carry the stages.
 
-Five-layer model. Three production workflow types. Fifty-two practitioners, with token-count comparisons instead of vibes.
-
-That's a better evidence base than anything I could produce alone. So I stopped inventing my own structure and adopted theirs.
+That's a formalization of something I'd been doing by feel, written down by people who bothered to specify it. So I stopped inventing my own structure and adopted theirs.
 
 What you get is a small vocabulary of **forms**, and the discipline is that every folder has to be one of them and say which. A **Pipeline** is sequential stages where reading order is dependency order. A **Record Library** accumulates instances instead of producing one output. A **Knowledge Bundle** is linked research holding the other forms up. An **Umbrella** groups parallel work. A **Context Map** routes. My workspace adds a **Factory**, which is stable reference material configured once and never regenerated per run, and treats each stage folder as a **Contract**.
 
@@ -139,7 +137,7 @@ Three consequences, and all three took me a while to appreciate.
 
 **The forms constrain what you're allowed to build.** Call a folder a Record Library and you've committed to it accumulating. Call it a Factory and you've committed to it being configured once. The vocabulary makes a certain kind of sprawl harder to do by accident. That's most of what a methodology is for.
 
-One note on timing, stated narrowly. My own knowledge-base repo doing folder-layered context has a first commit in January 2026, a couple of months before the ICM paper went up. That's a git-verifiable fact about when I was working on this and nothing more. The paper has controlled testing and fifty-two practitioners behind it. My repo doesn't. Getting somewhere earlier isn't the same as getting there with evidence.
+One note on timing, stated narrowly. My own knowledge-base repo doing folder-layered context has a first commit in January 2026, two months before the ICM paper went up on 17 March. That's a git-verifiable fact about when I was working on this and nothing more. They wrote the method down and specified it. I had a habit. Getting somewhere earlier isn't the same as getting there with a specification.
 
 
 ## One question sorts all of it
@@ -611,7 +609,7 @@ The bit I haven't built is the join. Capture that writes straight into a numbere
 
 Two different things are in play here. Running them together is the easiest way to overclaim, so let me separate them.
 
-**The harness isn't speculative.** Folder-as-architecture has fifty-two practitioners and three production workflow types behind it, and that's somebody else's work, not mine. The three-tier capture split is the thing I've run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I've applied it to, mostly by making one specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification.
+**The harness isn't speculative.** Folder-as-architecture is specified and published, and that's somebody else's work, not mine. The three-tier capture split is the thing I've run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I've applied it to, mostly by making one specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification.
 
 None of that is a proposal. It's how the setup works, and you can build it this afternoon.
 
@@ -646,7 +644,7 @@ The harness gets smaller. The part that stays gets a lot more serious.
 
 <div class="sources"><div class="sources-inner">
 <p class="sources-label">Sources</p>
-<p class="sources-list">Jake Van Clief and David McDermott, <em>Interpretable Context Methodology: Folder Structure as Agent Architecture</em> (2026) · <a href="https://github.com/RinDig/icm-architect">ICM-Architect</a>, an independent open-source implementation of the same five forms · <a href="https://polar.sh/blog/orbit-llm-safe-design-system">Building an LLM-Safe Design System</a>, Polar engineering, on Orbit · <a href="https://lawsofux.com/">Laws of UX</a>, Jon Yablonski, for Miller's Law and Fitts's Law · <a href="https://www.nngroup.com/articles/tabs-used-right/">Tabs, Used Right</a>, Nielsen Norman Group · Shumailov, Shumaylov, Zhao, Papernot, Anderson and Gal, "AI models collapse when trained on recursively generated data," <em>Nature</em> 631, 755–759 (2024), read alongside <a href="https://arxiv.org/abs/2410.12954">A Note on Shumailov et al. (2024)</a> · <a href="https://arxiv.org/html/2411.03477v2">CrowdGenUI</a> and <a href="https://arxiv.org/pdf/2601.17614">AlignUI</a>, preference-driven UI generation · <a href="https://arxiv.org/pdf/2511.00843">Portal UX Agent</a>, bounding selection without reasoning about it · <a href="https://github.com/UGAIForge/DesignRepair">DesignRepair</a> · <a href="https://github.com/nexu-io/open-design">Open Design</a> · <a href="https://salt-nlp.github.io/Design2Code/">Design2Code</a>, Stanford SALT · <a href="https://research.google/pubs/api-governance-at-scale/">API Governance at Scale</a>, Google Research, for the governance structure the tiering borrows from</p>
+<p class="sources-list">Jake Van Clief and David McDermott, <a href="https://arxiv.org/abs/2603.16021">Interpretable Context Methodology: Folder Structure as Agentic Architecture</a> (arXiv, March 2026) · <a href="https://github.com/RinDig/icm-architect">ICM-Architect</a>, an independent open-source implementation of the same five forms · <a href="https://polar.sh/blog/orbit-llm-safe-design-system">Building an LLM-Safe Design System</a>, Polar engineering, on Orbit · <a href="https://lawsofux.com/">Laws of UX</a>, Jon Yablonski, for Miller's Law and Fitts's Law · <a href="https://www.nngroup.com/articles/tabs-used-right/">Tabs, Used Right</a>, Nielsen Norman Group · Shumailov, Shumaylov, Zhao, Papernot, Anderson and Gal, "AI models collapse when trained on recursively generated data," <em>Nature</em> 631, 755–759 (2024), read alongside <a href="https://arxiv.org/abs/2410.12954">A Note on Shumailov et al. (2024)</a> · <a href="https://arxiv.org/html/2411.03477v2">CrowdGenUI</a> and <a href="https://arxiv.org/pdf/2601.17614">AlignUI</a>, preference-driven UI generation · <a href="https://arxiv.org/pdf/2511.00843">Portal UX Agent</a>, bounding selection without reasoning about it · <a href="https://github.com/UGAIForge/DesignRepair">DesignRepair</a> · <a href="https://github.com/nexu-io/open-design">Open Design</a> · <a href="https://salt-nlp.github.io/Design2Code/">Design2Code</a>, Stanford SALT · <a href="https://research.google/pubs/api-governance-at-scale/">API Governance at Scale</a>, Google Research, for the governance structure the tiering borrows from</p>
 </div></div>
 
 ---
