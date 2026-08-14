@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The harness outlives the model"
+title: "Anatomy of a design system harness"
 date: 2026-08-12 07:00:00 -0700
 categories: design-engineering
 ---
@@ -17,42 +17,36 @@ figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;
 .sources-list a{color:#242424;}
 </style>
 
-*Everyone's tuning prompts for a model that gets deprecated inside a year. The harness around it doesn't get deprecated. It's files on disk. A model plugs in, does the work, plugs out, and the practice stays where it was. This is how mine is built, and what two years of rebuilding it taught me.*
+*A design system tells you what exists. A harness is everything around it that decides what gets built, checks whether the build was right, and carries the reasoning between the two. This is the model I've arrived at after two years of running one, laid out part by part.*
 
 **Executive summary**
 
-- **A prompt is tuned to a model. A harness isn't.** Every hour you spend on phrasing gets written off the day that model retires. Every hour you spend on a file the next model reads just as well doesn't. That's the whole reason to build one.
-- The substrate isn't mine. It's **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agent architecture. Five forms, a contract in every folder, reading order as build order.
+- **A harness is not a design system, and it's not the model.** It's the connective structure: sources of truth, a guidance layer, execution, gates, and a path back. The design system is one input to it.
+- The substrate is **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agent architecture. Five forms, a contract in every folder, reading order as build order.
 - Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else. It sorts into two destinations, not one folder.
 - Most of what we write down passes. Spacing. Contrast. Tokens, theme, semantics. All of it should compile into something you can't type wrong, and stop being prose.
-- What survives is pattern choice. Accordion or list. Card or row. Modal or panel. That's the only part needing real judgment, and it's far thinner than the conversation about AI and design context suggests.
+- What survives is pattern choice. Accordion or list. Card or row. Modal or panel. That's the only part needing real judgment, and it's far thinner than it first appears.
 - What survives gets a format, not a folder of documents. A **judgment record**: a pattern, the condition it applies under, the principle justifying it, and the alternatives it beat. Schema, records, research corpus, and a matcher that resolves a condition the same way every time. The repo is **cairn**.
 - Three things make that format work instead of just exist. Precedence, so a tie between two records has an answer. Retrieval at the decision, not a load at the start of a session. And a hard stop when nothing matches. A generator that keeps going falls back on the model's own priors, quietly, at full confidence. That's where drift comes from.
 - The gate is where this argument usually goes vague. Models generate and models score. A plain function decides. Nothing that generates gets a vote on its own output.
 - The folder forms turn out to be memory registers wearing different clothes. That convergence is the strongest sign the shape is right rather than merely tidy.
 
 
-## The model is the disposable part
+## What a harness is
 
-Sit with the release cadence for a second.
+Start with the word, because it does a lot of work here and I mean something specific by it.
 
-The model you've tuned your prompts against is getting deprecated. Probably this year. The one replacing it has different quirks, a different context budget, and a different set of things it quietly assumes when you don't tell it otherwise. Every hour you spent on phrasing goes with it.
+A design system is a vocabulary. Tokens, components, patterns. It tells you what exists and what things are called. It does not tell you which one to reach for, whether the thing that got built was the right thing, or why the last person chose what they chose.
 
-The harness stays.
+A harness is everything around that. Sources of truth on one side. A guidance layer that carries what the vocabulary can't. An execution layer. Gates that check the work. And a path from what the gates learn back into the guidance. The design system sits inside it as one input among several.
 
-A folder that declares what it holds and what a person has to check reads the same to whatever's on the other end. A JSON record with a condition and a citation isn't a prompt technique. A threshold function that decides pass, revise, or fail doesn't care which model produced the score it's thresholding. Swap the engine and the practice survives, because the practice was never in the engine.
+> A design system says what exists. A harness decides what gets built and checks whether it was right.
 
-> A prompt is tuned to a model. A harness is what the model plugs into.
+The distinction matters because the two get collapsed constantly. Teams write more documentation into the design system and expect it to start behaving like a harness. It won't. A vocabulary can't hold a decision procedure, and stuffing one into the other is why design systems buckle once AI is writing the code against them.
 
-That's the real argument for building one, and it's stronger than the argument usually made. The usual pitch is quality. Better context, better output. Fine. True, even. The durable pitch is that this is the only part of your AI practice that accrues instead of resetting.
+So this is a model of the harness, part by part. Not a survey and not a methodology I'm selling. It's where I landed after building one, running it, and rebuilding it twice.
 
-So. The advice everywhere right now is to document more. The patterns, the states, the accessibility rules, the intent. Put it all somewhere the agent can reach and the output stops looking generic.
-
-I spent two years building exactly that. It's half wrong.
-
-Not because context doesn't help. It does. But most of what we call design context should never have been documentation in the first place, and treating it that way is a big part of why design systems fall apart once AI is writing the code.
-
-Here's what I'd been running, and roughly what most teams land on once they take this seriously. Sources of truth on the outside, feeding a guidance layer. Guidance tiered instead of piled flat, because sooner or later two rules contradict each other and one of them has to win. An execution layer that is honestly interchangeable. Two gates instead of one, because tests and CI check whether the code runs, not whether it was worth building. And a loop back, because a system that cannot learn from what it shipped goes stale.
+Here's the version I ran longest, with the parts specified. Guidance is tiered instead of piled flat, because sooner or later two rules contradict each other and one of them has to win. The execution layer is honestly interchangeable. Two gates rather than one, because tests and CI check whether the code runs, not whether it was worth building. And the path back is a loop, because a system that can't learn from what it shipped goes stale.
 
 <figure class="diagram" role="img" aria-label="The harness as a loop: sources of truth feed a tiered guidance layer, which feeds execution, which passes two gates, with a capture path returning to guidance.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 631" data-w="1720" data-h="631" role="img" aria-label="The design harness redrawn as a loop."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="52" class="hd" fill="#010101">The design harness</text>
@@ -527,9 +521,9 @@ Read it top to bottom and you have the argument. Stage one is the vocabulary, de
 
 That last one costs nothing and buys a lot. The unbuilt part of the system has an address and a stated reason. It isn't a ticket someone finds in eight months. It isn't silently absent either.
 
-This is also the concrete answer to the model-independence claim, so let me be literal about it. There's no prompt in that tree. Nothing above is phrased for a particular model's temperament. It's a vocabulary, a schema, a set of records, some research, and seven or eight `CONTEXT.md` files stating what each folder owes the next one.
+Worth naming what that tree is made of, because it's the clearest statement of what a harness actually is. There's no prompt in it. It's a vocabulary, a schema, a set of records, some research, and seven or eight `CONTEXT.md` files stating what each folder owes the next one.
 
-Point a different model at the root and it reads its way in the same way. That isn't a happy accident of the design. It's the reason for the design.
+That's the whole harness. Structure and stated obligations, sitting where the work happens.
 
 <figure class="diagram" role="img" aria-label="The workspace view: numbered stage folders, a CONTEXT.md contract in each, and four folder forms that map onto memory registers.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 902" data-w="1600" data-h="902" role="img" aria-label="The workspace view: numbered stage folders whose reading order is the build order, a CONTEXT.md contract in every folder declaring role, inputs, process, outputs and a human check, and four folder forms that map onto memory registers."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="62" class="hd" fill="#2C38F5">The spine  ·  numbered folders, reading order is build order</text><line x1="70" y1="76" x2="1530" y2="76" stroke="#BEBEBE" stroke-width="1.5"/>
@@ -648,7 +642,7 @@ If you want to start, don't start with the records. Start with one folder that d
 
 Almost everything else here is downstream of that one rule. You can apply it before lunch.
 
-The harness gets smaller. It also gets to stay. Whatever model you're running in eighteen months reads the same files, and none of the work you put into it needs doing again.
+The harness gets smaller. The part that stays gets a lot more serious.
 
 <div class="sources"><div class="sources-inner">
 <p class="sources-label">Sources</p>
