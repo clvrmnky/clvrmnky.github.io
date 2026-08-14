@@ -15,6 +15,10 @@ figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;
 .sources-label{font-variant:small-caps;letter-spacing:.08em;color:#606060;font-size:.78rem;margin:0 0 .9rem;}
 .sources-list{font-size:.8rem;color:#606060;line-height:1.7;margin:0;max-width:80ch;}
 .sources-list a{color:#242424;}
+/* code blocks are authored to 63 columns; size so they fit without scrolling */
+pre{font-size:.85rem;line-height:1.55;overflow-x:auto;}
+pre code{font-size:inherit;}
+@media (max-width:620px){pre{font-size:.72rem;padding:.8rem;}}
 </style>
 
 *A design system tells you what exists. A harness is everything around it that decides what gets built, checks whether the build was right, and carries the reasoning between the two. This is the model I've arrived at after two years of running one, laid out part by part.*
@@ -22,11 +26,11 @@ figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;
 **Executive summary**
 
 - **A harness is not a design system, and it's not the model.** It's the connective structure: sources of truth, a guidance layer, execution, gates, and a path back. The design system is one input to it.
-- The substrate is **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agentic architecture. A small set of folder forms, a contract in every folder, reading order as build order.
+- The substrate is **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agentic architecture: five context layers, a contract in every folder, reading order as build order. Scoping context by stage takes a run from roughly 42,000 tokens to between 2,000 and 8,000.
 - Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else. It sorts into two destinations, not one folder.
 - Most of what we write down passes. Spacing. Contrast. Tokens, theme, semantics. All of it should compile into something you can't type wrong, and stop being prose.
 - What survives is pattern choice. Accordion or list. Card or row. Modal or panel. That's the only part needing real judgment, and it's far thinner than it first appears.
-- What survives gets a format, not a folder of documents. A **judgment record**: a pattern, the condition it applies under, the principle justifying it, and the alternatives it beat. Schema, records, research corpus, and a matcher that resolves a condition the same way every time. The repo is **cairn**.
+- What survives gets a format, not a folder of documents. A **judgment record**: a pattern, the condition it applies under, the principle justifying it, and the alternatives it beat. Schema, records, research corpus, and a matcher that resolves a condition the same way every time.
 - Three things make that format work instead of just exist. Precedence, so a tie between two records has an answer. Retrieval at the decision, not a load at the start of a session. And a hard stop when nothing matches. A generator that keeps going falls back on the model's own priors, quietly, at full confidence. That's where drift comes from.
 - The gate is where this argument usually goes vague. Models generate and models score. A plain function decides. Nothing that generates gets a vote on its own output.
 - The folder forms turn out to be memory registers wearing different clothes. That convergence is the strongest sign the shape is right rather than merely tidy.
@@ -117,13 +121,17 @@ That version works. I'd still defend it. It's also too big, and that's what the 
 
 ## The substrate isn't mine
 
-The harness needs a shape before any of the design-specific parts go in it. I want to be precise about where that shape came from, because it's the part of this with real validation behind it instead of my own conviction.
+The harness needs a shape before any of the design-specific parts go in it. I want to be precise about where that shape came from, because it isn't mine.
 
-It's called **ICM, Interpretable Context Methodology**. Jake Van Clief and David McDermott, [*Folder Structure as Agentic Architecture*](https://arxiv.org/abs/2603.16021), March 2026. The core claim is exactly what the subtitle says. The folder hierarchy isn't where the context gets filed. It *is* the architecture. Their method replaces framework-level orchestration with filesystem structure, and numbered folders carry the stages.
+It's called **ICM, Interpretable Context Methodology**. Jake Van Clief and David McDermott, [*Folder Structure as Agentic Architecture*](https://arxiv.org/html/2603.16021v2), March 2026. The core claim is exactly what the subtitle says. The folder hierarchy isn't where the context gets filed. It *is* the architecture. Their method replaces framework-level orchestration with filesystem structure, and numbered folders carry the stages.
 
-That's a formalization of something I'd been doing by feel, written down by people who bothered to specify it. So I stopped inventing my own structure and adopted theirs.
+The part that convinced me was the context accounting. They stratify a workspace into five layers: a global identity file, workspace-level routing, stage-specific contracts, reference material that persists across runs, and working artifacts unique to one run. Then they measure what that costs. A monolithic setup runs around 42,000 tokens of context. Scoped by stage, the same work delivers 2,000 to 8,000.
 
-What you get is a small vocabulary of **forms**, and the discipline is that every folder has to be one of them and say which. A **Pipeline** is sequential stages where reading order is dependency order. A **Record Library** accumulates instances instead of producing one output. A **Knowledge Bundle** is linked research holding the other forms up. An **Umbrella** groups parallel work. A **Context Map** routes. My workspace adds a **Factory**, which is stable reference material configured once and never regenerated per run, and treats each stage folder as a **Contract**.
+That number is the argument. Not "your agent will behave better," which is unfalsifiable, but "you are sending forty thousand tokens where eight would do, and here is the structure that fixes it."
+
+Worth being straight about the rest of the evidence, since the paper is. It comes from a 52-member community and three worked pipelines, and the authors say plainly that data collection has been informal: conversations rather than structured interviews, diary studies, or instrumented logging. That's a specified method with honest reporting behind it, not a controlled trial. It's still more than I had, which is why I stopped inventing my own structure and adopted theirs.
+
+On top of the layers I use a vocabulary of **forms**, and the discipline is that every folder has to be one of them and say which. This part comes from [ICM-Architect](https://github.com/RinDig/icm-architect), an open-source implementation built independently of the paper: a **Pipeline** is sequential stages where reading order is dependency order, a **Record Library** accumulates instances instead of producing one output, a **Knowledge Bundle** is linked research holding the other forms up, an **Umbrella** groups parallel work, and a **Context Map** routes. My workspace adds a **Factory**, which is stable reference material configured once and never regenerated per run, and treats each stage folder as a **Contract**.
 
 That sounds like filing. It isn't.
 
@@ -167,7 +175,7 @@ Run a design system through that question and most of it walks out. What stays i
 
 Saying that is easy. What I couldn't hand-wave was what the surviving row is actually *made of*.
 
-So I gave it a format and built it. The repo is **cairn**. The unit it's built around is a single judgment: a condition comes in, a pattern goes out, with a stated reason.
+So I gave it a format and built it. The unit it's built around is a single judgment: a condition comes in, a pattern goes out, with a stated reason.
 
 That unit is a **judgment record**. Eight required fields, and the interesting thing is which ones.
 
@@ -185,20 +193,28 @@ That unit is a **judgment record**. Eight required fields, and the interesting t
   },
   "justification": {
     "principle": "Progressive Disclosure",
-    "citation": "Nielsen Norman Group, Progressive Disclosure; Miller's Law",
-    "rationale": "Content is optional detail, not required for task completion,
-      and viewport space is constrained. Showing it flat would exceed a reasonable
-      working-memory chunk size and increase scroll-depth cost without benefit for
-      users who don't need the detail."
+    "citation": "NN/g Progressive Disclosure; Miller's Law",
+    "rationale": "Optional detail, not required for the
+      task, on a constrained viewport. Showing it flat
+      exceeds a reasonable working-memory chunk and adds
+      scroll cost for users who don't need it."
   },
   "alternatives_considered": [
-    { "pattern": "flat-list",
-      "rejected_because": "Exceeds comfortable chunk size at this content volume." },
-    { "pattern": "tabs",
-      "rejected_because": "Tabs imply mutually exclusive parallel sections a user
-        chooses between. This content is supplementary to a primary flow." }
+    {
+      "pattern": "flat-list",
+      "rejected_because": "Exceeds comfortable chunk size
+        at this content volume."
+    },
+    {
+      "pattern": "tabs",
+      "rejected_because": "Tabs imply mutually exclusive
+        parallel sections. This is supplementary."
+    }
   ],
-  "origin": { "type": "universal", "authored_by": "…", "authored_date": "2026-07-24" }
+  "origin": {
+    "type": "universal",
+    "authored_date": "2026-07-24"
+  }
 }
 ```
 
@@ -210,7 +226,7 @@ Three of those fields do the real work. They're also the three that would be eas
 
 **`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. That field decides what could ever become a shared asset across teams and what stays permanently yours.
 
-Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
+Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Pick a condition across the four fields and it resolves to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
 
 The behavior I care about most is what happens when nothing matches. It says so and stops.
 
@@ -274,7 +290,7 @@ Thin doesn't mean free. Three things have to be true or the format is just a nic
 
 **It needs precedence, not a list.** Two records will contradict each other eventually and one has to win. The capture layer I've run longest handles this with three tiers. Constraints are hard rules and the agent flags a violation. Decisions carry the choice, the reasoning, and when to revisit. Context informs without constraining. I keep constraints rare on purpose, because if everything is a constraint then nothing is.
 
-**cairn doesn't solve this.** Two records matching the same condition with conflicting recommendations have no resolution beyond most-specific-wins, and most-specific-wins is a tiebreak, not a precedence model. It's the first thing I'd fix.
+**My version doesn't solve this.** Two records matching the same condition with conflicting recommendations have no resolution beyond most-specific-wins, and most-specific-wins is a tiebreak, not a precedence model. It's the first thing I'd fix.
 
 **It needs retrieval at the decision, not a load at the start.** A record gets matched against the actual condition at the moment it matters. That's a different thing from stuffing a context window at the top of a session and hoping. It fails differently too. The failure is no-match instead of forgetting, and no-match you can see. Being blunt about the current mechanism: matching is exact-field, nothing semantic. A condition phrased slightly differently misses. That's a real limit. I'd rather it miss loudly than fuzzy-match its way to a confident wrong record.
 
@@ -498,21 +514,21 @@ An architecture that only exists in a diagram is a diagram. All of it has to sit
 So here's the whole thing as a directory, which is the only form of it that actually runs. Five stages, numbered, because the numbering is the dependency order and reading order is build order. Stage two can't reason about accordion against card unless stage one has already made both named things. So stage one goes first, and says so.
 
 ```
-cairn/
-├── CLAUDE.md              # read first, every session: where am I, where do I go
-├── CONTEXT.md             # the pipeline definition and why it's shaped this way
-├── 01_design-system/      # the bounded vocabulary a decision can resolve to
+design-harness/
+├── CLAUDE.md            # read first: where am I, where next
+├── CONTEXT.md           # the pipeline, and why it's shaped so
+├── 01_design-system/    # the vocabulary decisions resolve to
 │   ├── CONTEXT.md
 │   ├── tokens.json
 │   └── components/vocabulary.json
-├── 02_judgment-layer/     # the working core
+├── 02_judgment-layer/   # the working core
 │   ├── CONTEXT.md
-│   ├── schema/            # Factory: the record format, configured once
-│   ├── records/           # Record Library: accumulating instances
-│   └── knowledge/         # Knowledge Bundle: the research holding both up
-├── 03_implementation/     # where a judgment becomes a running artifact
-├── 04_handoff/            # keeping that artifact coherent as it changes
-└── 05_environment/        # the product surface. deliberate stub
+│   ├── schema/          # Factory: the record format
+│   ├── records/         # Record Library: instances
+│   └── knowledge/       # Knowledge Bundle: the research
+├── 03_implementation/   # judgment becomes a running artifact
+├── 04_handoff/          # keeping it coherent as it changes
+└── 05_environment/      # product surface. deliberate stub
 ```
 
 Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately grayscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
@@ -609,7 +625,7 @@ The bit I haven't built is the join. Capture that writes straight into a numbere
 
 Two different things are in play here. Running them together is the easiest way to overclaim, so let me separate them.
 
-**The harness isn't speculative.** Folder-as-architecture is specified and published, and that's somebody else's work, not mine. The three-tier capture split is the thing I've run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I've applied it to, mostly by making one specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification.
+**The harness isn't speculative.** Folder-as-architecture is specified, published, and measured on context cost, and that's somebody else's work, not mine. The three-tier capture split is the thing I've run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I've applied it to, mostly by making one specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification.
 
 None of that is a proposal. It's how the setup works, and you can build it this afternoon.
 
@@ -644,7 +660,7 @@ The harness gets smaller. The part that stays gets a lot more serious.
 
 <div class="sources"><div class="sources-inner">
 <p class="sources-label">Sources</p>
-<p class="sources-list">Jake Van Clief and David McDermott, <a href="https://arxiv.org/abs/2603.16021">Interpretable Context Methodology: Folder Structure as Agentic Architecture</a> (arXiv, March 2026) · <a href="https://github.com/RinDig/icm-architect">ICM-Architect</a>, an independent open-source implementation of the same five forms · <a href="https://polar.sh/blog/orbit-llm-safe-design-system">Building an LLM-Safe Design System</a>, Polar engineering, on Orbit · <a href="https://lawsofux.com/">Laws of UX</a>, Jon Yablonski, for Miller's Law and Fitts's Law · <a href="https://www.nngroup.com/articles/tabs-used-right/">Tabs, Used Right</a>, Nielsen Norman Group · Shumailov, Shumaylov, Zhao, Papernot, Anderson and Gal, "AI models collapse when trained on recursively generated data," <em>Nature</em> 631, 755–759 (2024), read alongside <a href="https://arxiv.org/abs/2410.12954">A Note on Shumailov et al. (2024)</a> · <a href="https://arxiv.org/html/2411.03477v2">CrowdGenUI</a> and <a href="https://arxiv.org/pdf/2601.17614">AlignUI</a>, preference-driven UI generation · <a href="https://arxiv.org/pdf/2511.00843">Portal UX Agent</a>, bounding selection without reasoning about it · <a href="https://github.com/UGAIForge/DesignRepair">DesignRepair</a> · <a href="https://github.com/nexu-io/open-design">Open Design</a> · <a href="https://salt-nlp.github.io/Design2Code/">Design2Code</a>, Stanford SALT · <a href="https://research.google/pubs/api-governance-at-scale/">API Governance at Scale</a>, Google Research, for the governance structure the tiering borrows from</p>
+<p class="sources-list">Jake Van Clief and David McDermott, <a href="https://arxiv.org/html/2603.16021v2">Interpretable Context Methodology: Folder Structure as Agentic Architecture</a> (arXiv, March 2026) · <a href="https://github.com/RinDig/icm-architect">ICM-Architect</a>, an independent open-source implementation of the same five forms · <a href="https://polar.sh/blog/orbit-llm-safe-design-system">Building an LLM-Safe Design System</a>, Polar engineering, on Orbit · <a href="https://lawsofux.com/">Laws of UX</a>, Jon Yablonski, for Miller's Law and Fitts's Law · <a href="https://www.nngroup.com/articles/tabs-used-right/">Tabs, Used Right</a>, Nielsen Norman Group · Shumailov, Shumaylov, Zhao, Papernot, Anderson and Gal, "AI models collapse when trained on recursively generated data," <em>Nature</em> 631, 755–759 (2024), read alongside <a href="https://arxiv.org/abs/2410.12954">A Note on Shumailov et al. (2024)</a> · <a href="https://arxiv.org/html/2411.03477v2">CrowdGenUI</a> and <a href="https://arxiv.org/pdf/2601.17614">AlignUI</a>, preference-driven UI generation · <a href="https://arxiv.org/pdf/2511.00843">Portal UX Agent</a>, bounding selection without reasoning about it · <a href="https://github.com/UGAIForge/DesignRepair">DesignRepair</a> · <a href="https://github.com/nexu-io/open-design">Open Design</a> · <a href="https://salt-nlp.github.io/Design2Code/">Design2Code</a>, Stanford SALT · <a href="https://research.google/pubs/api-governance-at-scale/">API Governance at Scale</a>, Google Research, for the governance structure the tiering borrows from</p>
 </div></div>
 
 ---
