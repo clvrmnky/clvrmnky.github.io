@@ -12,36 +12,42 @@ figure.diagram svg text{font-family:"Atkinson Hyperlegible Next",sans-serif;}
 figure.diagram figcaption{max-width:1500px;margin:.9rem auto 0;font-size:.82rem;font-style:italic;color:#606060;line-height:1.5;}
 </style>
 
-*Everyone is optimising prompts for a model that will be deprecated inside a year. The thing worth building is the harness around it: a real working setup, made of files on disk, that a model plugs into and out of without taking the practice with it. This is how mine is built, what it is made of, and what it took two years and a couple of rebuilds to get right.*
+*Everyone's tuning prompts for a model that gets deprecated inside a year. The harness around it doesn't get deprecated. It's files on disk. A model plugs in, does the work, plugs out, and the practice stays where it was. This is how mine is built, and what two years of rebuilding it taught me.*
 
 **Executive summary**
 
-- **A prompt is tuned to a model. A harness is not.** Every hour spent tuning phrasing to one model's quirks is written off the day it is deprecated. The same hour spent on a file the next model reads just as well is not. That is the whole reason to build the thing.
-- The substrate is **ICM — Interpretable Context Methodology**: folder structure as agent architecture, from Jake Van Clief and David McDermott. Five forms, a contract in every folder, reading order as build order. Not my invention, and the part of this with real validation behind it.
-- Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else, and it sorts it into two destinations, not one folder.
-- Most of what we write down passes. Spacing, contrast, tokens, theme, semantics. All of it should be compiled into something you cannot type wrong, and stop being prose.
-- What survives is pattern choice. Accordion or list, card or row, modal or panel. That is the only part that needs real judgment, and it is far thinner than the conversation about AI and design context suggests.
-- That surviving part gets a format rather than a folder of documents. A **judgment record**: a pattern, the condition it applies under, the principle and citation justifying it, and the alternatives it beat. Schema, records, research corpus, and a matcher that resolves a condition the same way every time. The repo is **cairn**.
-- Three things make the format work rather than just exist. Precedence, so a tie between two records has an answer. Retrieval at the moment of the decision instead of a load at the start of a session. And a hard stop when nothing matches, because a generator that keeps going falls back on the model's own priors, quietly and at full confidence. That is where drift comes from.
+- **A prompt is tuned to a model. A harness isn't.** Every hour you spend on phrasing gets written off the day that model retires. Every hour you spend on a file the next model reads just as well doesn't. That's the whole reason to build one.
+- The substrate isn't mine. It's **ICM, Interpretable Context Methodology**, from Jake Van Clief and David McDermott. Folder structure as agent architecture. Five forms, a contract in every folder, reading order as build order.
+- Ask one question of every rule in your design system: **can a machine check it?** That question sorts everything else. It sorts into two destinations, not one folder.
+- Most of what we write down passes. Spacing. Contrast. Tokens, theme, semantics. All of it should compile into something you can't type wrong, and stop being prose.
+- What survives is pattern choice. Accordion or list. Card or row. Modal or panel. That's the only part needing real judgment, and it's far thinner than the conversation about AI and design context suggests.
+- What survives gets a format, not a folder of documents. A **judgment record**: a pattern, the condition it applies under, the principle justifying it, and the alternatives it beat. Schema, records, research corpus, and a matcher that resolves a condition the same way every time. The repo is **cairn**.
+- Three things make that format work instead of just exist. Precedence, so a tie between two records has an answer. Retrieval at the decision, not a load at the start of a session. And a hard stop when nothing matches. A generator that keeps going falls back on the model's own priors, quietly, at full confidence. That's where drift comes from.
 - The gate is where this argument usually goes vague. Models generate and models score. A plain function decides. Nothing that generates gets a vote on its own output.
-- The folder forms turn out to be memory registers under a different name — which is the strongest sign the shape is right rather than merely tidy.
+- The folder forms turn out to be memory registers wearing different clothes. That convergence is the strongest sign the shape is right rather than merely tidy.
 
 
 ## The model is the disposable part
 
-Sit with the release cadence for a second. The model you have tuned your prompts against will be deprecated, probably within the year, and the one replacing it will have different quirks, a different context budget, and a different set of things it silently assumes when you do not tell it otherwise. Every hour you spent on phrasing goes with it.
+Sit with the release cadence for a second.
 
-The harness does not go with it. A folder that declares what it holds and what a person has to check before its output can be trusted reads the same to whatever is on the other end. A JSON record with a condition and a citation is not a prompt technique. A threshold function that decides pass or revise or fail does not care which model produced the score it is thresholding. Swap the engine and the practice survives, because the practice was never in the engine.
+The model you've tuned your prompts against is getting deprecated. Probably this year. The one replacing it has different quirks, a different context budget, and a different set of things it quietly assumes when you don't tell it otherwise. Every hour you spent on phrasing goes with it.
+
+The harness stays.
+
+A folder that declares what it holds and what a person has to check reads the same to whatever's on the other end. A JSON record with a condition and a citation isn't a prompt technique. A threshold function that decides pass, revise, or fail doesn't care which model produced the score it's thresholding. Swap the engine and the practice survives, because the practice was never in the engine.
 
 > A prompt is tuned to a model. A harness is what the model plugs into.
 
-That is the actual argument for building one, and it is a stronger argument than the one usually made for it. The usual pitch is quality — better context, better output. Fine, and probably true. The durable pitch is that this is the only part of your AI practice that accrues instead of resetting.
+That's the real argument for building one, and it's stronger than the argument usually made. The usual pitch is quality. Better context, better output. Fine. True, even. The durable pitch is that this is the only part of your AI practice that accrues instead of resetting.
 
-So: the advice everywhere right now is to document more. The patterns, the states, the accessibility rules, the intent. Put it all somewhere the agent can reach and the output stops looking generic.
+So. The advice everywhere right now is to document more. The patterns, the states, the accessibility rules, the intent. Put it all somewhere the agent can reach and the output stops looking generic.
 
-I have spent two years building exactly that, and I think it is half wrong. Not because context does not help. It does. But most of what we call design context should never have been documentation in the first place, and treating it that way is a big part of why design systems fall apart once AI is writing the code.
+I spent two years building exactly that. It's half wrong.
 
-Here is what I had been running, and roughly what most teams land on once they take this seriously. Sources of truth on the outside, feeding a guidance layer. Guidance tiered instead of piled flat, because sooner or later two rules contradict each other and one of them has to win. An execution layer that is honestly interchangeable. Two gates instead of one, because tests and CI check whether the code runs, not whether it was worth building. And a loop back, because a system that cannot learn from what it shipped goes stale.
+Not because context doesn't help. It does. But most of what we call design context should never have been documentation in the first place, and treating it that way is a big part of why design systems fall apart once AI is writing the code.
+
+Here's what I'd been running, and roughly what most teams land on once they take this seriously. Sources of truth on the outside, feeding a guidance layer. Guidance tiered instead of piled flat, because sooner or later two rules contradict each other and one of them has to win. An execution layer that is honestly interchangeable. Two gates instead of one, because tests and CI check whether the code runs, not whether it was worth building. And a loop back, because a system that cannot learn from what it shipped goes stale.
 
 <figure class="diagram" role="img" aria-label="The harness as a loop: sources of truth feed a tiered guidance layer, which feeds execution, which passes two gates, with a capture path returning to guidance.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 631" data-w="1720" data-h="631" role="img" aria-label="The design harness redrawn as a loop."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="52" class="hd" fill="#010101">The design harness</text>
@@ -107,54 +113,66 @@ Here is what I had been running, and roughly what most teams land on once they t
 <figcaption>Two years of corrections. Sources of truth generate the context instead of sitting inside it, guidance carries precedence, and whatever the gate learns comes back as a constraint, a decision, or context.</figcaption>
 </figure>
 
-That version works. I would still defend it. It is also too big, and that is what the rest of this is about.
+That version works. I'd still defend it. It's also too big, and that's what the rest of this is about.
 
 
-## The substrate is not mine, and that is the point
+## The substrate isn't mine
 
-Before any of the design-specific parts, the harness needs a shape, and I want to be precise about where that shape came from, because it is the part of this with actual validation behind it rather than my own conviction.
+The harness needs a shape before any of the design-specific parts go in it. I want to be precise about where that shape came from, because it's the part of this with real validation behind it instead of my own conviction.
 
-It is called **ICM, Interpretable Context Methodology** — Jake Van Clief and David McDermott, *Folder Structure as Agent Architecture*. The core claim is exactly what the subtitle says: the folder hierarchy is not where the context is filed, it *is* the architecture. A five-layer model, tested across three production workflow types, validated with fifty-two practitioners, with token-count comparisons rather than vibes. That is a materially better evidence base than anything I could produce alone, and it is why I stopped inventing my own structure and adopted theirs.
+It's called **ICM, Interpretable Context Methodology**. Jake Van Clief and David McDermott, *Folder Structure as Agent Architecture*. The core claim is exactly what the subtitle says. The folder hierarchy isn't where the context gets filed. It *is* the architecture.
 
-What you get from it is a small vocabulary of **forms**, and the discipline is that every folder has to be one of them and say which. A **Pipeline** is sequential stages where reading order is dependency order. A **Record Library** accumulates instances rather than producing one output. A **Knowledge Bundle** is linked research holding the other forms up. An **Umbrella** groups parallel work. A **Context Map** routes. My workspace adds a **Factory** — stable reference material configured once and never regenerated per run — and treats each stage folder as a **Contract**.
+Five-layer model. Three production workflow types. Fifty-two practitioners, with token-count comparisons instead of vibes.
 
-That sounds like filing. It is not, and the thing that makes it not filing is the rule that **every folder declares a contract before it is allowed to hold anything**. A `CONTEXT.md`, same fields every time. Which form this folder is. What it needs and where from. The steps. What it produces and who takes it. What a person has to check. A routing table of what is inside. And an honest note about what is not built yet. No orphan folders. The contract comes before the content.
+That's a better evidence base than anything I could produce alone. So I stopped inventing my own structure and adopted theirs.
 
-Three practical consequences, all of which took me a while to appreciate:
+What you get is a small vocabulary of **forms**, and the discipline is that every folder has to be one of them and say which. A **Pipeline** is sequential stages where reading order is dependency order. A **Record Library** accumulates instances instead of producing one output. A **Knowledge Bundle** is linked research holding the other forms up. An **Umbrella** groups parallel work. A **Context Map** routes. My workspace adds a **Factory**, which is stable reference material configured once and never regenerated per run, and treats each stage folder as a **Contract**.
 
-**An agent orients by reading, not by being told.** The routing lives in the same tree as the material, so a session starts by reading its way in rather than having a human paste an orientation paragraph. Which is precisely the part that would otherwise be model-specific prompt scaffolding.
+That sounds like filing. It isn't.
 
-**A stage is allowed to be empty, but not silent about being empty.** In my workspace the product-surface stage is a stub whose `CONTEXT.md` exists to explain why building it now would be a mistake. That is a structural way of holding an unbuilt thing without either pretending it exists or forgetting it should.
+What makes it not filing is one rule: **every folder declares a contract before it's allowed to hold anything**. A `CONTEXT.md`, same fields every time. Which form this folder is. What it needs and where from. The steps. What it produces and who takes it. What a person has to check. A routing table of what's inside. An honest note about what isn't built yet. No orphan folders. The contract comes before the content.
 
-**The forms constrain what you are allowed to build.** Naming a folder a Record Library commits you to it accumulating. Naming it a Factory commits you to it being configured once. The vocabulary makes a certain kind of sprawl harder to do accidentally, which is most of what a methodology is for.
+Three consequences, and all three took me a while to appreciate.
 
-I want to be careful about the timing here rather than imply more than I should. My own knowledge-base repo doing folder-layered context dates to a first commit in January 2026, before the ICM paper went up around March. That is a git-verifiable fact about when I was doing this, and nothing more than that — the paper has controlled testing and fifty-two practitioners behind it, which my repo does not, and arriving somewhere earlier is not the same as arriving with evidence.
+**An agent orients by reading, not by being told.** The routing lives in the same tree as the material. A session starts by reading its way in instead of having a human paste an orientation paragraph. That paragraph is exactly the thing that would otherwise be model-specific scaffolding.
+
+**A stage can be empty. It can't be silent about being empty.** In my workspace the product-surface stage is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. That's how you hold an unbuilt thing without pretending it exists or forgetting it should.
+
+**The forms constrain what you're allowed to build.** Call a folder a Record Library and you've committed to it accumulating. Call it a Factory and you've committed to it being configured once. The vocabulary makes a certain kind of sprawl harder to do by accident. That's most of what a methodology is for.
+
+One note on timing, stated narrowly. My own knowledge-base repo doing folder-layered context has a first commit in January 2026, a couple of months before the ICM paper went up. That's a git-verifiable fact about when I was working on this and nothing more. The paper has controlled testing and fifty-two practitioners behind it. My repo doesn't. Getting somewhere earlier isn't the same as getting there with evidence.
 
 
 ## One question sorts all of it
 
-Ask this about every rule you have written down. **Can a machine check it?**
+Ask this about every rule you've written down. **Can a machine check it?**
 
-Sounds like a detail. It is the whole fork.
+Sounds like a detail. It's the whole fork.
 
-There is good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs cannot close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One grey instead of the grey next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it is not something the model has to remember. CI is the contract, docs are advice.
+There's good evidence for where the line falls. Polar built a design system called Orbit specifically to survive being written by an LLM. Their argument is that docs can't close an infinite surface, because a model has endless ways to be slightly wrong. Padding four instead of five. One gray instead of the gray next to it. So they stopped documenting and started closing. Typed props instead of class strings. Raw elements banned by lint. Dark mode collapsed into one value so it's not something the model has to remember. CI is the contract. Docs are advice.
 
-Here is the part that matters. They closed spacing, colour, semantics and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail. They locked down what a thing looks like and never touched which thing to use.
+Here's the part that matters. They closed spacing, color, semantics, and theme. They left pattern choice completely alone. Nothing in Orbit decides accordion against tabs against a side rail.
 
-That is outside confirmation that the enforceable part is real, bigger than most designers assume, and has an edge to it.
+They locked down what a thing looks like and never touched which thing to use.
 
-The edge already has a name, older than anything I came up with. Memory research splits declarative knowledge, the stuff you look up, from procedural knowledge, the stuff that shapes what you do without ever being read. A lint rule is procedural. A retrieved rationale is declarative. Worth borrowing the older name, because the failure modes come with it.
+That's outside confirmation. The enforceable part is real, it's bigger than most designers assume, and it has an edge to it.
 
-So what a machine can check gets compiled and stops being documentation. What it cannot gets stored where you can retrieve it. Two different destinations. Almost everyone puts both in the same folder.
+The edge already has a name older than anything I came up with. Memory research splits declarative knowledge, the stuff you look up, from procedural knowledge, the stuff that shapes what you do without ever being read. A lint rule is procedural. A retrieved rationale is declarative. Borrow the older name, because the failure modes come with it.
+
+So what a machine can check gets compiled and stops being documentation. What it can't gets stored where you can retrieve it. Two destinations.
+
+Almost everyone puts both in the same folder.
 
 
-## So I built the thing that holds what is left
+## So I built the thing that holds what's left
 
-Run a design system through that question and most of it walks out. What stays is pattern choice — given this content, this audience, this much room, this viewport: accordion or flat list, card or list row, modal or inline panel. No token decides that and no linter can.
+Run a design system through that question and most of it walks out. What stays is pattern choice. Given this content, this audience, this much room, this viewport: accordion or flat list, card or list row, modal or inline panel. No token decides that. No linter can.
 
-Saying that is easy. The part I could not hand-wave was what the surviving row is actually *made of*, so I gave it a format and built it. The repo is called **cairn**, and the unit it is built around is a single judgment: a condition comes in, a pattern goes out, with a stated reason.
+Saying that is easy. What I couldn't hand-wave was what the surviving row is actually *made of*.
 
-That unit is a **judgment record**. Eight required fields, and the interesting thing is which ones:
+So I gave it a format and built it. The repo is **cairn**. The unit it's built around is a single judgment: a condition comes in, a pattern goes out, with a stated reason.
+
+That unit is a **judgment record**. Eight required fields, and the interesting thing is which ones.
 
 ```json
 {
@@ -170,7 +188,7 @@ That unit is a **judgment record**. Eight required fields, and the interesting t
   },
   "justification": {
     "principle": "Progressive Disclosure",
-    "citation": "Nielsen Norman Group — Progressive Disclosure; Miller's Law",
+    "citation": "Nielsen Norman Group, Progressive Disclosure; Miller's Law",
     "rationale": "Content is optional detail, not required for task completion,
       and viewport space is constrained. Showing it flat would exceed a reasonable
       working-memory chunk size and increase scroll-depth cost without benefit for
@@ -181,23 +199,25 @@ That unit is a **judgment record**. Eight required fields, and the interesting t
       "rejected_because": "Exceeds comfortable chunk size at this content volume." },
     { "pattern": "tabs",
       "rejected_because": "Tabs imply mutually exclusive parallel sections a user
-        chooses between — this content is supplementary to a primary flow." }
+        chooses between. This content is supplementary to a primary flow." }
   ],
   "origin": { "type": "universal", "authored_by": "…", "authored_date": "2026-07-24" }
 }
 ```
 
-Three of those fields are doing real work, and they are the ones that would be easiest to leave out.
+Three of those fields do the real work. They're also the three that would be easiest to leave out.
 
-**`constraint_level` and `enforcement` encode the sorting question directly.** The four levels are primitive, component, pattern, and block-surface, and enforcement is hard, soft, or partial. A pattern-level record should almost always be soft. A primitive-level one should almost always be hard. That is not decoration — it means the taxonomy is a schema field a machine can check rather than an argument in a blog post. One of the five records exists purely as the contrast case: a 44×44pt touch target, `constraint_level: primitive`, `enforcement: hard`, `linter_checkable: true`. It is in the library to mark the boundary. It is the shape of the thing that should *not* be a retrieved record at all.
+**`constraint_level` and `enforcement` encode the sorting question directly.** Four levels: primitive, component, pattern, block-surface. Enforcement is hard, soft, or partial. A pattern-level record should almost always be soft. A primitive-level one should almost always be hard. That isn't decoration. It makes the taxonomy a schema field a machine can check instead of an argument in a blog post. One of the five records exists purely as the contrast case: a 44×44pt touch target, `constraint_level: primitive`, `enforcement: hard`, `linter_checkable: true`. It's in the library to mark the boundary. It's the shape of the thing that should *not* be a retrieved record at all.
 
-**`alternatives_considered` is mandatory, minimum one.** This is the field I would defend hardest, because it is what makes a record falsifiable instead of an assertion. Anyone can write down that they chose an accordion. Writing down that tabs were rejected because tabs imply mutually exclusive parallel sections is a claim someone can come back and argue with. A record with no rejected alternatives is a preference wearing a citation.
+**`alternatives_considered` is mandatory, minimum one.** This is the field I'd defend hardest. It's what makes a record falsifiable instead of an assertion. Anyone can write down that they chose an accordion. Writing down that tabs got rejected because tabs imply mutually exclusive parallel sections is a claim someone can come back and argue with. A record with no rejected alternatives is a preference wearing a citation.
 
-**`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. This matters more than it looks: it is the field that decides what could ever become a shared asset across teams and what is permanently yours.
+**`origin.type` splits universal from org-specific from regulatory.** Universal is citable and safe to publish. Org-specific is the local reason a model could never infer, and it never leaves the building. That field decides what could ever become a shared asset across teams and what stays permanently yours.
 
-Then there is the matcher, and it is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match — most declared fields — wins. No embeddings, no semantic similarity, no model in the loop. You can run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
+Then the matcher, which is deliberately stupid. Score every record against the incoming condition. A record matches only if every field it declares agrees. Most specific match wins, meaning the one with the most declared fields. No embeddings. No semantic similarity. No model in the loop. Run the demo, pick a condition across four selects, and watch it resolve to a pattern, its rationale, and the alternatives it beat, rendered as a literal grayscale wireframe.
 
-And the behaviour I care about most is what happens when nothing matches: it says so and stops. No match is a real result. It means nobody has ruled on this condition yet.
+The behavior I care about most is what happens when nothing matches. It says so and stops.
+
+No match is a real result. It means nobody has ruled on this condition yet.
 
 <figure class="diagram" role="img" aria-label="The harness once enforcement absorbs the primitive and component rows: judgment shrinks to a single row and one pattern gate remains.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 790" data-w="1520" data-h="790" role="img" aria-label="The harness this proposes: judgment shrinks to a single row and enforcement absorbs the rest."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="286" class="hd" fill="#010101">The design harness</text>
@@ -246,39 +266,45 @@ And the behaviour I care about most is what happens when nothing matches: it say
 <figcaption>Enforcement moves up front. The build gate mostly disappears. Guidance stops being something you load at the start and becomes something you look up when the decision happens.</figcaption>
 </figure>
 
-Three things change once you accept that. Guardrails stop being something output passes through and become something input cannot get around, so you do not catch the wrong token afterward, you make it impossible to type. Guidance stops being a document and becomes something the generator calls. And if the judgment layer really is portable, it stops belonging to your team at all.
+Three things change once you accept that. Guardrails stop being something output passes through and become something input can't get around, so you don't catch the wrong token afterward, you make it impossible to type. Guidance stops being a document and becomes something the generator calls. And if the judgment layer really is portable, it stops belonging to your team at all.
 
-Yes, this one nests too. Nesting is right when the containment is real, and a bounded set of options genuinely does contain everything the generator can produce. It is wrong when it is not, which is why documentation should never be drawn as containing a codebase.
+Yes, this one nests too. Nesting is right when the containment is real, and a bounded set of options genuinely does contain everything the generator can produce. It's wrong when it isn't. Which is why documentation should never be drawn as containing a codebase.
 
 
 ## What that thin row needs, and where mine is still thin
 
-Thin does not mean free. Three things have to be true or the format is just a nicer way to store opinions. Two of them the build does. One it does not, and that is the honest gap.
+Thin doesn't mean free. Three things have to be true or the format is just a nicer way to store opinions. The build does two of them. It doesn't do the third, and that's the honest gap.
 
-**It needs precedence, not a list.** Two records will contradict each other eventually and one has to win. In the capture layer I have run longest this is three tiers: constraints are hard rules and the agent flags a violation, decisions carry the choice and the reasoning and when to revisit, context informs without constraining. I keep constraints rare on purpose, because if everything is a constraint then nothing is. **In cairn this is not solved.** Two records matching the same condition with conflicting recommendations has no defined resolution beyond most-specific-wins, and most-specific-wins is a tiebreak, not a precedence model. It is the first thing I would fix.
+**It needs precedence, not a list.** Two records will contradict each other eventually and one has to win. The capture layer I've run longest handles this with three tiers. Constraints are hard rules and the agent flags a violation. Decisions carry the choice, the reasoning, and when to revisit. Context informs without constraining. I keep constraints rare on purpose, because if everything is a constraint then nothing is.
 
-**It needs to be retrieved when the decision happens, not loaded at the start.** A record gets matched against the actual condition at the moment it matters. That is a different thing from stuffing a context window at the top of a session and hoping. It also fails differently: the failure is no-match instead of forgetting, and no-match you can see. Worth being blunt about the current mechanism — matching is exact-field, nothing semantic. A condition phrased slightly differently misses. That is a real limit, and I would rather it miss loudly than fuzzy-match its way to a confident wrong record.
+**cairn doesn't solve this.** Two records matching the same condition with conflicting recommendations have no resolution beyond most-specific-wins, and most-specific-wins is a tiebreak, not a precedence model. It's the first thing I'd fix.
 
-**And it has to stop when nothing matches.** This is the line I would defend hardest. A generator that keeps going without a record does not produce nothing. It falls back on everything the model already believes about interfaces, quietly, at full confidence. That looks like success. It is where drift comes from, and you cannot see it, because the output is perfectly plausible.
+**It needs retrieval at the decision, not a load at the start.** A record gets matched against the actual condition at the moment it matters. That's a different thing from stuffing a context window at the top of a session and hoping. It fails differently too. The failure is no-match instead of forgetting, and no-match you can see. Being blunt about the current mechanism: matching is exact-field, nothing semantic. A condition phrased slightly differently misses. That's a real limit. I'd rather it miss loudly than fuzzy-match its way to a confident wrong record.
 
-> Every drift problem is the model’s own priors winning.
+**It has to stop when nothing matches.** A generator that keeps going without a record doesn't produce nothing. It falls back on everything the model already believes about interfaces. Quietly. At full confidence. That looks like success.
 
-Which changes the diagnosis. The model did not get it wrong. It did what any unbriefed model does. Stopping loudly is what turns that silence into a queue, and the queue is the only reason the system ever improves.
+That's where drift comes from, and you can't see it, because the output is perfectly plausible.
+
+> Every drift problem is the model's own priors winning.
+
+Which changes the diagnosis. The model didn't get it wrong. It did what any unbriefed model does. Stopping loudly turns that silence into a queue, and the queue is the only reason the system ever improves.
 
 
-## Let the model score it, do not let it decide
+## Let the model score it. Don't let it decide.
 
-That leaves the gate, and this is usually where these arguments go vague. Check the output against the record, people say, and then never explain how.
+That leaves the gate, and the gate is where these arguments usually go vague. Check the output against the record, people say, and then never explain how.
 
-I had the same gap until I realised I had already built the mechanism somewhere else, in a domain with a lot less tolerance for a plausible wrong answer. It is a seven node pipeline for genomic interpretation, and the rule it runs on moves over without changes.
+I had the same gap. Then I realized I'd already built the mechanism somewhere else, in a domain with a lot less tolerance for a plausible wrong answer. A seven node pipeline for genomic interpretation. The rule it runs on moves over without changes.
 
 > Models generate and models score. A function decides. Nothing that generates gets a vote on its own output.
 
-A critic scores the output against records pulled from a real knowledge base rather than against its own instincts, on three things. Consistency catches claims the evidence does not support. Alignment catches the hard parts that got quietly skipped. Specificity catches output that sounds fine and would have come out the same for any input.
+A critic scores the output against records pulled from a real knowledge base instead of against its own instincts. Three things. Consistency catches claims the evidence doesn't support. Alignment catches the hard parts that got quietly skipped. Specificity catches output that sounds fine and would have come out the same for any input.
 
-That last one is worth sitting with. Specificity is the sameness problem with a number on it. Everyone complains that AI interfaces all look the same. Almost nobody measures it.
+Sit with that last one. Specificity is the sameness problem with a number on it. Everyone complains that AI interfaces all look the same. Almost nobody measures it.
 
-The critic can be a model, because it reads an artifact and scores it against something outside itself. The decision cannot be, because if the generator can influence the verdict then there is no verdict. So the decision is a plain threshold function you can unit test on its own and audit without running a model at all. Pass, revise twice, then fail. Three outcomes rather than two, because real systems need a middle and an unlimited retry is not one.
+The critic can be a model, because it reads an artifact and scores it against something outside itself. The decision can't be. If the generator can influence the verdict, there's no verdict.
+
+So the decision is a plain threshold function. Unit testable on its own, auditable without running a model at all. Pass, revise twice, then fail. Three outcomes instead of two, because real systems need a middle and an unlimited retry isn't one.
 
 <figure class="diagram" role="img" aria-label="The operating view: a slow authoring loop, a versioned shared store, a fast generation loop ending in a critic and a deterministic governance function, and four signal types returning to the queue.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1590 1476" data-w="1590" data-h="1476" role="img" aria-label="Operating view: a slow authoring loop, a versioned shared store, a fast generation loop ending in a critic and a deterministic governance function, and four signal types returning to the authoring queue."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="62" class="hd" fill="#2C38F5">Authoring loop  ·  runs in weeks  ·  a person decides</text><line x1="70" y1="76" x2="1520" y2="76" stroke="#BEBEBE" stroke-width="1.5"/>
@@ -391,22 +417,24 @@ The critic can be a model, because it reads an artifact and scores it against so
 <figcaption>Two clocks. Authoring runs in weeks with a person deciding. Generation runs in seconds with nobody watching. Most complaints about documentation come from running the slow loop at the fast loop’s speed.</figcaption>
 </figure>
 
-Every run writes out a typed, versioned artifact. Scores, decision, revision count, and an audit log nothing can edit after the fact. That is what makes the feedback loop real instead of aspirational. Four signals come out of it and they go four different places. No match means nobody has ruled on this yet, so write a record. Override means someone rejected what came back, so the record is wrong. Stale means the system moved past a version pin. Score drop means drift, caught before anyone sees it.
+Every run writes out a typed, versioned artifact. Scores, decision, revision count, and an audit log nothing can edit after the fact. That's what makes the feedback loop real instead of aspirational.
+
+Four signals come out of it and they go four different places. No match means nobody has ruled on this yet, so write a record. Override means someone rejected what came back, so the record is wrong. Stale means the system moved past a version pin. Score drop means drift, caught before anyone sees it.
 
 A feedback loop that dumps everything into one inbox is a suggestion box. Four signals with four destinations is a mechanism.
 
 
-## Seven kinds of memory, two of which are not memory
+## Seven kinds of memory, two of which aren't memory
 
-There is a vocabulary going around for agent memory. Working, semantic, episodic, procedural, retrieval, parametric, prospective. It usually shows up as seven parallel things, which is the one thing it definitely is not. Sorted properly it explains something the stage view cannot.
+There's a vocabulary going around for agent memory. Working, semantic, episodic, procedural, retrieval, parametric, prospective. It usually shows up as seven parallel things, which is the one thing it definitely isn't. Sort it properly and it explains something the stage view can't.
 
-Three of them are stores you keep. Semantic is what is true regardless of when, so the records and the vocabulary. Somebody wrote it, it is pinned to a version, and it gets looked up. Procedural is how the thing gets built, so the compiled set. Nobody reads it and it shapes the work anyway. Episodic is what happened on each run, so the audit log. It piles up on its own and nobody authors it.
+Three of them are stores you keep. Semantic is what's true regardless of when, so the records and the vocabulary. Somebody wrote it, it's pinned to a version, it gets looked up. Procedural is how the thing gets built, so the compiled set. Nobody reads it and it shapes the work anyway. Episodic is what happened on each run, so the audit log. It piles up on its own and nobody authors it.
 
-One is a buffer. Working memory is the run itself, bounded, thrown away at the end.
+One is a buffer. Working memory is the run itself. Bounded, thrown away at the end.
 
-One is a trigger. Prospective memory is remembering to do something later, and almost every harness has it without calling it that. A version pin that fires when the system moves past it. A review date that fires on a named person. A question sitting in a queue until somebody answers it. All the same kind of thing, usually built three separate ways. It is the only one that fires on time rather than on lookup.
+One is a trigger. Prospective memory is remembering to do something later, and almost every harness has it without calling it that. A version pin that fires when the system moves past it. A review date that fires on a named person. A question sitting in a queue until somebody answers it. All the same kind of thing, usually built three separate ways. It's the only one that fires on time instead of on lookup.
 
-And two of the seven are not stores at all. **Retrieval is the transport**, how a store reaches the buffer. It is an arrow, not a box, and treating it as a seventh cupboard is how teams end up with a memory service nobody can describe the contents of. **Parametric is the substrate**. You cannot write to it, version it, review it or pin it. The only thing about it that matters here is that it fills any gap instantly and confidently.
+And two of the seven aren't stores at all. **Retrieval is the transport**, how a store reaches the buffer. It's an arrow, not a box. Treating it as a seventh cupboard is how teams end up with a memory service nobody can describe the contents of. **Parametric is the substrate**. You can't write to it, version it, review it, or pin it. The only thing about it that matters here is that it fills any gap instantly and confidently.
 
 <figure class="diagram" role="img" aria-label="The same machine sorted by memory register: working buffer, three durable stores, a prospective trigger layer, and parametric memory as the substrate.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1081" data-w="1560" data-h="1081" role="img" aria-label="The same harness sorted by memory register: one ephemeral working buffer, three durable stores (semantic, procedural, episodic), a prospective trigger layer, and parametric memory as the substrate that fills any gap."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="62" class="hd" fill="#0E6D75">Ephemeral  ·  one register, rebuilt every request</text><line x1="70" y1="76" x2="1490" y2="76" stroke="#BEBEBE" stroke-width="1.5"/>
@@ -463,38 +491,40 @@ And two of the seven are not stores at all. **Retrieval is the transport**, how 
 <figcaption>The same machine sorted by register. Working memory is the only one the model ever touches. Everything else is architecture about what gets loaded into it.</figcaption>
 </figure>
 
-Sorting it this way turned up one correction I did not expect. The return path in the first diagram says capture, and capture is the wrong word. Episodic piles up for free. Semantic has to be written. The step between them is **consolidation**, turning one specific thing that happened into a general rule. That is the expensive human bit, it is the one part of the loop you cannot automate, and calling it capture makes it sound like storage.
+Sorting it this way turned up a correction I didn't expect. The return path in the first diagram says capture. Capture is the wrong word. Episodic piles up for free. Semantic has to be written. The step between them is **consolidation**, turning one specific thing that happened into a general rule. That's the expensive human bit. It's the one part of the loop you can't automate, and calling it capture makes it sound like storage.
 
 
 ## Where all this actually lives
 
-An architecture that only exists in a diagram is a diagram. All of it has to sit somewhere an agent can reach at the moment it needs it, and reaching it is not the same problem as storing it.
+An architecture that only exists in a diagram is a diagram. All of it has to sit somewhere an agent can reach at the moment it needs it, and reaching it isn't the same problem as storing it.
 
-So here is the whole thing as a directory, which is the only form of it that actually runs. Five stages, numbered, because the numbering is the dependency order and reading order is build order. Stage two cannot reason about accordion against card unless stage one has already made both named things, so stage one goes first and says so.
+So here's the whole thing as a directory, which is the only form of it that actually runs. Five stages, numbered, because the numbering is the dependency order and reading order is build order. Stage two can't reason about accordion against card unless stage one has already made both named things. So stage one goes first, and says so.
 
 ```
 cairn/
 ├── CLAUDE.md              # read first, every session: where am I, where do I go
-├── CONTEXT.md             # the pipeline definition and why it is shaped this way
+├── CONTEXT.md             # the pipeline definition and why it's shaped this way
 ├── 01_design-system/      # the bounded vocabulary a decision can resolve to
 │   ├── CONTEXT.md
 │   ├── tokens.json
 │   └── components/vocabulary.json
 ├── 02_judgment-layer/     # the working core
 │   ├── CONTEXT.md
-│   ├── schema/            # Factory — the record format, configured once
-│   ├── records/           # Record Library — accumulating instances
-│   └── knowledge/         # Knowledge Bundle — the research holding both up
+│   ├── schema/            # Factory: the record format, configured once
+│   ├── records/           # Record Library: accumulating instances
+│   └── knowledge/         # Knowledge Bundle: the research holding both up
 ├── 03_implementation/     # where a judgment becomes a running artifact
 ├── 04_handoff/            # keeping that artifact coherent as it changes
-└── 05_environment/        # the product surface — deliberate stub
+└── 05_environment/        # the product surface. deliberate stub
 ```
 
-Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately grayscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake — without real handoff mechanics underneath, it is just a nicer code generator.
+Read it top to bottom and you have the argument. Stage one is the vocabulary, deliberately minimal and deliberately grayscale. Stage two is where the actual work is: schema, records, research corpus. Stage three is the reference demo. Stage four is research only. Stage five is a stub whose `CONTEXT.md` exists to say why building it now would be a mistake. Without real handoff mechanics underneath, it's just a nicer code generator.
 
-Note what that last one costs, which is nothing, and what it buys, which is a lot. The unbuilt part of the system has an address and a stated reason. It is not a ticket someone will find in eight months, and it is not silently absent either.
+That last one costs nothing and buys a lot. The unbuilt part of the system has an address and a stated reason. It isn't a ticket someone finds in eight months. It isn't silently absent either.
 
-This is also the concrete answer to the model-independence claim, and it is worth being literal about it. There is no prompt in that tree. Nothing above is phrased for a particular model's temperament. It is a vocabulary, a schema, a set of records, some research, and seven or eight `CONTEXT.md` files stating what each folder owes the next one. Point a different model at the root and it reads its way in the same way. That is not a happy accident of the design — it is the reason for the design.
+This is also the concrete answer to the model-independence claim, so let me be literal about it. There's no prompt in that tree. Nothing above is phrased for a particular model's temperament. It's a vocabulary, a schema, a set of records, some research, and seven or eight `CONTEXT.md` files stating what each folder owes the next one.
+
+Point a different model at the root and it reads its way in the same way. That isn't a happy accident of the design. It's the reason for the design.
 
 <figure class="diagram" role="img" aria-label="The workspace view: numbered stage folders, a CONTEXT.md contract in each, and four folder forms that map onto memory registers.">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 902" data-w="1600" data-h="902" role="img" aria-label="The workspace view: numbered stage folders whose reading order is the build order, a CONTEXT.md contract in every folder declaring role, inputs, process, outputs and a human check, and four folder forms that map onto memory registers."><defs><marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C8C8C"/></marker><marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#4D6FF2"/></marker><marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#0E6D75"/></marker><marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#B02016"/></marker><marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" fill="#8C1EB3"/></marker><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#010101" flood-opacity="0.07"/></filter></defs><style>text{font-family:'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;}.lbl{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;}.hd{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}</style><text x="70" y="62" class="hd" fill="#2C38F5">The spine  ·  numbered folders, reading order is build order</text><line x1="70" y1="76" x2="1530" y2="76" stroke="#BEBEBE" stroke-width="1.5"/>
@@ -563,55 +593,59 @@ This is also the concrete answer to the model-independence claim, and it is wort
 <figcaption>Numbered stages in dependency order, a contract in every folder, and four folder types that turn out to be the memory registers wearing different clothes.</figcaption>
 </figure>
 
-Two things fell out of putting that next to the register sort, and I designed neither of them in.
+Two things fell out of putting that next to the register sort. I designed neither of them in.
 
 **The folder forms are the registers.** A Factory gets set up once and never regenerated, which is procedural. A Record Library piles up authored instances, which is semantic. A Knowledge Bundle is the research holding both up, the citations under the judgment. A Contract is the stage where one run gets put together, which is working memory. Four forms adopted for navigation, landing exactly on registers named for something else entirely, in a literature neither vocabulary was drawn from.
 
-That convergence is the best evidence I have that the shape is right rather than merely tidy. A filing scheme chosen for how it reads should not independently reproduce a taxonomy from memory research. When two vocabularies built for unrelated reasons land on the same four distinctions, the distinctions are probably in the problem rather than in either vocabulary.
+That convergence is the best evidence I have that the shape is right rather than merely tidy. A filing scheme chosen for how it reads shouldn't independently reproduce a taxonomy from memory research. When two vocabularies built for unrelated reasons land on the same four distinctions, the distinctions are probably in the problem rather than in either vocabulary.
 
-Which also shows the hole. There is no folder type for episodic. Runs, scores, decisions and audit logs have nowhere structural to go, so they end up in whatever logging the execution layer happens to have, outside the workspace and outside the contract. That is a fifth type waiting to be written, and until it exists the consolidation loop has no address.
+It also shows the hole. There's no folder form for episodic. Runs, scores, decisions, and audit logs have nowhere structural to go, so they end up in whatever logging the execution layer happens to have. Outside the workspace. Outside the contract. That's a fifth form waiting to be written, and until it exists the consolidation loop has no address.
 
-**And the human check field is prospective memory written into the filesystem.** Every stage says what a person has to verify before its output can be trusted. That is not documentation and it is not a lookup. It is an obligation pointed at a named human, sitting in the same file as the routing table, which is why it survives when a wiki page would not.
+**The human check field is prospective memory written into the filesystem.** Every stage says what a person has to verify before its output can be trusted. That isn't documentation and it isn't a lookup. It's an obligation pointed at a named human, sitting in the same file as the routing table. Which is why it survives when a wiki page wouldn't.
 
-There is one more layer and it is the one I have run longest. Capture happens live, into three tiers: constraints, decisions, context. That is how you get reasoning out of a working session before it evaporates. The numbered workspace is where it goes to become durable and addressable. The two are different problems and you need both. **The tier says which rule wins. The stage number says which folder feeds which.** Most knowledge systems fail because they only solve one of those.
+One more layer, and it's the one I've run longest. Capture happens live, into three tiers: constraints, decisions, context. That's how you get reasoning out of a working session before it evaporates. The numbered workspace is where it goes to become durable and addressable. Two different problems, and you need both. **The tier says which rule wins. The stage number says which folder feeds which.** Most knowledge systems fail because they only solve one of those.
 
-The bit I have not built is the join. Capture that writes straight into a numbered stage, tagged by type, instead of into one flat folder somebody sorts by hand later. That is the difference between something that works for one person and something a team can run.
+The bit I haven't built is the join. Capture that writes straight into a numbered stage, tagged by type, instead of into one flat folder somebody sorts by hand later. That's the difference between something that works for one person and something a team can run.
 
 
 ## What is settled, and what is still a bet
 
-Two different things are in play here and running them together would be the easiest way to overclaim, so I want to separate them.
+Two different things are in play here. Running them together is the easiest way to overclaim, so let me separate them.
 
-**The harness itself is not speculative.** Folder-as-architecture has fifty-two practitioners and three production workflow types behind it, and that is somebody else's work, not mine. The three-tier capture split — constraints, decisions, context — is the thing I have run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I have applied it to, mostly by making a specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification. None of that is a proposal. It is how the setup works, and it is buildable this afternoon.
+**The harness isn't speculative.** Folder-as-architecture has fifty-two practitioners and three production workflow types behind it, and that's somebody else's work, not mine. The three-tier capture split is the thing I've run longest and would rebuild first on any new project. Contract-before-content has survived every workspace I've applied it to, mostly by making one specific failure impossible rather than by making anything better. The generate/score/decide separation came over from a genomic interpretation pipeline where a plausible wrong answer has real consequences, and it transferred without modification.
 
-**The judgment layer is the newest piece and the least proven.** The schema is constructible, the matcher is deterministic, the records are real and cited. What I have not shown is that any of it changes what a model produces. That is a genuine hole and I would rather name it than write around it.
+None of that is a proposal. It's how the setup works, and you can build it this afternoon.
 
-So here is what a harness shaped this way is *for* — four outcomes, in descending order of how confident I am.
+**The judgment layer is the newest piece and the least proven.** The schema is constructible. The matcher is deterministic. The records are real and cited. What I haven't shown is that any of it changes what a model produces. That's a genuine hole, and I'd rather name it than write around it.
 
-**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value — touch target minima, spacing minima, contrast ratios — that should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, and the residue should land at pattern level specifically. That is the outcome the whole argument rests on, and the cheapest one to check, because checking it does not require running a model at all. Orbit is outside corroboration: they closed spacing, colour, semantics and theme, and stopped exactly where pattern choice begins.
+So here's what a harness shaped this way is *for*. Four outcomes, in descending order of how confident I am.
 
-**Output that moves, not just rationale that moves.** A retrieved record should change what the model generates, not merely what it says about what it generated. That distinction is the whole game. A record that improves the stated reasoning while the rendered pattern stays parked at the statistical mode would be a post-hoc explanation generator — precisely the failure this argument accuses after-the-fact compliance checking of.
+**A much smaller surface that needs human judgment.** Most of what gets called spatial or physical design constraint is hard primitive value. Touch target minima. Spacing minima. Contrast ratios. All of it should be encoded once and enforced mechanically instead of re-derived per project. Sort a real design system into the four levels and the enforceable fraction should be large, with the residue landing at pattern level specifically. That's the outcome the whole argument rests on, and the cheapest one to check, because checking it doesn't require running a model at all. Orbit corroborates it from the outside. They closed spacing, color, semantics, and theme, and stopped exactly where pattern choice begins.
 
-**A judgment layer that is not yours.** The records describe conditions and principles, not one vocabulary, so pointing the library at a different design system should be a matter of remapping pattern names rather than rewriting justifications. If that holds, the judgment layer stops being a team asset and starts being a field asset — something a profession could hold in common the way it holds Fitts's Law in common.
+**Output that moves, not just rationale that moves.** A retrieved record should change what the model generates, not what it says about what it generated. That distinction is the whole game. A record that improves the stated reasoning while the rendered pattern stays parked at the statistical mode is a post-hoc explanation generator. Which is precisely the failure this argument accuses after-the-fact compliance checking of.
 
-**A library that appreciates.** A record authored for one condition should earn value on later conditions nobody anticipated when writing it, so coverage grows faster than authoring effort. That is the difference between an asset and a lookup table, and it is the outcome furthest out — five records cannot compound, and no amount of architecture makes them.
+**A judgment layer that isn't yours.** The records describe conditions and principles, not one vocabulary. Pointing the library at a different design system should be remapping pattern names, not rewriting justifications. If that holds, the judgment layer stops being a team asset and becomes a field asset. Something a profession holds in common the way it holds Fitts's Law in common.
 
-The comparison that actually matters underneath all four is not context against no context. Nobody argues context helps. It is **encoded once against pasted in every time**. Somebody who pastes the same rationale into a prompt might get the same output as a system that retrieves it automatically. That is the null this has to beat, and beating it is what separates a system from a very good snippet.
+**A library that appreciates.** A record authored for one condition should earn value on later conditions nobody anticipated when writing it, so coverage grows faster than authoring effort. That's the difference between an asset and a lookup table. It's also the outcome furthest out. Five records can't compound, and no amount of architecture makes them.
+
+The comparison underneath all four isn't context against no context. Nobody argues context helps. It's **encoded once against pasted in every time**. Somebody who pastes the same rationale into a prompt might get the same output as a system that retrieves it automatically. That's the null this has to beat. Beating it is what separates a system from a very good snippet.
 
 
 ## The short version
 
-Documentation used to describe a system from outside it. Skills, memory files, system instructions, agent-readable metadata, a folder contract. All of it is documentation, and every one of them now runs inside the thing it describes. That is the shift under all of this, and most of the advice being written right now has not caught up.
+Documentation used to describe a system from outside it. Skills, memory files, system instructions, agent-readable metadata, a folder contract. All of it is documentation, and every one of them now runs inside the thing it describes. That's the shift under all of this, and most of the advice being written right now hasn't caught up.
 
-Which is why the answer is not to write more. It is to sort it. Most of what you would write down should compile into something that cannot be typed wrong, and stop being prose. What is left is thin, needs actual judgment, needs to be there at the moment of the decision instead of loaded in advance, and needs a gate no model gets a vote in.
+So the answer isn't to write more. It's to sort it. Most of what you'd write down should compile into something you can't type wrong, and stop being prose. What's left is thin. It needs real judgment, it needs to be there at the decision instead of loaded in advance, and it needs a gate no model gets a vote in.
 
-That surviving row deserves a format rather than a folder of documents, which is what cairn is an attempt at. A pattern, the condition it applies under, the principle behind it, the alternatives it beat, and an honest note about where it came from. Authored once by a person, retrieved automatically at the moment it is needed, and loud about the conditions nobody has ruled on yet.
+That surviving row deserves a format, not a folder of documents. A pattern, the condition it applies under, the principle behind it, the alternatives it beat, and an honest note about where it came from. Authored once by a person. Retrieved automatically when it's needed. Loud about the conditions nobody has ruled on yet.
 
-If you want to start, do not start with the records. Start with one folder that declares what it is, what it needs, what it produces, and what a person has to check before its output can be trusted. Then refuse to put anything in a folder that has not done that. Almost everything else in this piece is downstream of that one rule, and it is a rule you can apply before lunch.
+If you want to start, don't start with the records. Start with one folder that declares what it is, what it needs, what it produces, and what a person has to check before its output can be trusted. Then refuse to put anything in a folder that hasn't done that.
 
-The harness gets smaller. It also gets to stay. Whatever model you are using in eighteen months will read the same files, and none of the work you did on it will need doing again.
+Almost everything else here is downstream of that one rule. You can apply it before lunch.
+
+The harness gets smaller. It also gets to stay. Whatever model you're running in eighteen months reads the same files, and none of the work you put into it needs doing again.
 
 
 ---
 
-*Diagrams are set in the Vanta design system: Atkinson Hyperlegible, and a colour ramp whose hues are derived from real emission wavelengths. Cadmium, Calcium H, hydrogen H-beta and H-gamma, on Vantablack and Purdue white.*
+*Diagrams are set in the Vanta design system: Atkinson Hyperlegible, and a color ramp whose hues are derived from real emission wavelengths. Cadmium, Calcium H, hydrogen H-beta and H-gamma, on Vantablack and Purdue white.*
