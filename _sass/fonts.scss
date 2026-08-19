@@ -255,3 +255,19 @@ hr {
 table, th, td {
   border-color: var(--color-border);
 }
+
+table {
+  width: 100%;
+  margin: 1.5rem 0;
+  font-size: 0.94em;
+}
+
+th, td {
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-weight: 700;
+}
