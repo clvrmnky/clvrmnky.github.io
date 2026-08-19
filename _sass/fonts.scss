@@ -256,6 +256,23 @@ table, th, td {
   border-color: var(--color-border);
 }
 
+figure {
+  margin: 1.75rem 0;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
 table {
   width: 100%;
   margin: 1.5rem 0;

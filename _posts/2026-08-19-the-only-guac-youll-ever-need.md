@@ -5,6 +5,12 @@ date: 2026-08-19 08:00:00 -0700
 categories: recipes
 ---
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/img/guac/mise-en-place.jpg"
+       alt="Overhead view of a stovetop set up for guacamole: a steel bowl of diced tomato, red onion and jalapeño on the left, a cutting board with chopped cilantro and four lime halves in the middle, and a large bowl of roughly broken avocado on the right, with garlic powder, cayenne, a pepper grinder and a dish of flaky salt around the edges.">
+  <figcaption>Everything at ¼-inch except the jalapeño. And yes, that is two whole limes, not a quarter of one.</figcaption>
+</figure>
+
 **Chef:** Justin Wayne Ranton · *Copyright 2023*
 
 **Serves:** 2 to 4. Scale up if you're feeding a crowd, and be smart about it.
