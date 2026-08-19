@@ -8,7 +8,7 @@ categories: recipes
 <figure>
   <img src="{{ site.baseurl }}/assets/img/guac/mise-en-place.jpg"
        alt="Overhead view of a stovetop set up for guacamole: a steel bowl of diced tomato, red onion and jalapeño on the left, a cutting board with chopped cilantro and four lime halves in the middle, and a large bowl of roughly broken avocado on the right, with garlic powder, cayenne, a pepper grinder and a dish of flaky salt around the edges.">
-  <figcaption>Everything at ¼-inch except the jalapeño. And yes, that is two whole limes, not a quarter of one.</figcaption>
+  <figcaption>Every dice at ¼-inch, jalapeño included. And yes, that is two whole limes, not a quarter of one.</figcaption>
 </figure>
 
 **Chef:** Justin Wayne Ranton · *Copyright 2023*
@@ -29,10 +29,10 @@ What I actually do is more jalapeño, more garlic powder, and more lime than any
 | Vine-ripe tomatoes | 1 to 2 medium, seeds and liquid removed, ¼-inch dice | same |
 | Purple onion | ½ small-medium, ¼-inch dice | same, to taste |
 | Cilantro leaves | ¼ to ⅓ cup, stems removed, finely chopped | same |
-| **Jalapeño** | 1, finely diced to ⅛-inch or smaller, start with half | **2, and I'm not starting with half** |
+| **Jalapeño** | 1, ¼-inch dice, start with half | **2, and I'm not starting with half** |
 | **Ground cayenne** | a pinch or two | **a pinch or two, but if you have ever shaken my hand you know my pinch is not your pinch** |
 | **Garlic powder** | 1 tsp | **1 to 1½ tbsp, and never garlic salt** |
-| **Lime** | ¼, juiced | **½ to a whole one, juiced** |
+| **Lime** | ¼, squeezed | **½ to a whole one, squeezed** |
 | Lemon juice | 1 tsp, optional, slows browning | optional |
 | Flaky sea salt | to taste, Maldon preferred | to taste, Maldon |
 
@@ -51,7 +51,7 @@ Dice into ¼-inch cubes, same as the avocado, and add to the bowl. **Do not stir
 Pick the leaves, chop into a fine chiffonade, or as close as your knife skills allow. Add to the bowl. **Still not stirring. Patience.**
 
 **5. Bring the heat.**
-Jalapeño is the one thing that doesn't match. Go fine, ⅛-inch or smaller, even smaller if you can hold the knife steady, so the heat spreads evenly instead of arriving in ambushes. Add half to start, and more later if you want it spicier. Add the cayenne and the garlic powder.
+¼-inch dice, same as everything else. The whole thing is built on balance, and that only works if no single ingredient can hide inside a bite or dominate one. Add half the jalapeño to start, and more later if you want it spicier. Add the cayenne and the garlic powder.
 
 This is the first place the safe version and the real version part ways. One jalapeño starting at half is a recipe that can't hurt you. Two, going in whole, is what's actually in the bowl at my house. Same with the garlic powder: 1 tsp is the printed number, 1 to 1½ tbsp is the number. Do not substitute garlic salt for it, ever, at any quantity.
 
