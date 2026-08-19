@@ -30,8 +30,8 @@ What I actually do is more jalapeño, more garlic powder, and more lime than any
 | Purple onion | ½ small-medium, ¼-inch dice | same, to taste |
 | Cilantro leaves | ¼ to ⅓ cup, stems removed, finely chopped | same |
 | **Jalapeño** | 1, finely diced to ⅛-inch or smaller, start with half | **2, and I'm not starting with half** |
-| Ground cayenne | a pinch or two | a pinch or two |
-| **Garlic powder** | 1 tsp | **2 to 3 tsp, and never garlic salt** |
+| **Ground cayenne** | a pinch or two | **a pinch or two, but if you have ever shaken my hand you know my pinch is not your pinch** |
+| **Garlic powder** | 1 tsp | **1 to 1½ tbsp, and never garlic salt** |
 | **Lime** | ¼, juiced | **½ to a whole one, juiced** |
 | Lemon juice | 1 tsp, optional, slows browning | optional |
 | Flaky sea salt | to taste, Maldon preferred | to taste, Maldon |
@@ -53,7 +53,9 @@ Pick the leaves, chop into a fine chiffonade, or as close as your knife skills a
 **5. Bring the heat.**
 Jalapeño is the one thing that doesn't match. Go fine, ⅛-inch or smaller, even smaller if you can hold the knife steady, so the heat spreads evenly instead of arriving in ambushes. Add half to start, and more later if you want it spicier. Add the cayenne and the garlic powder.
 
-This is the first place the safe version and the real version part ways. One jalapeño starting at half is a recipe that can't hurt you. Two, going in whole, is what's actually in the bowl at my house. Same with the garlic powder: 1 tsp is the printed number, 2 to 3 is the number. Do not substitute garlic salt for it, ever, at any quantity.
+This is the first place the safe version and the real version part ways. One jalapeño starting at half is a recipe that can't hurt you. Two, going in whole, is what's actually in the bowl at my house. Same with the garlic powder: 1 tsp is the printed number, 1 to 1½ tbsp is the number. Do not substitute garlic salt for it, ever, at any quantity.
+
+Cayenne is the one measurement I can't hand you honestly. It says a pinch or two in both columns because that's genuinely what I do. But if you have ever shaken my hand, you already know my pinch is not your pinch. Start with yours.
 
 **6. Add the citrus.**
 Squeeze the lime juice over everything, trying to spread it around the bowl, because it'll help things mix later. Add the lemon juice too if you want to slow browning. Browned guac is still totally fine to eat, by the way. Stir it and it goes away.
